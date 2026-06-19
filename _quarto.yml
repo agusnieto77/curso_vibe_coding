@@ -1,0 +1,97 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - "sesion-*/r.qmd"
+    - "sesion-*/python.ipynb"
+
+lang: es
+
+# El sitio NO ejecuta el código: muestra prosa, prompts y código formateado.
+# Cada quien corre los notebooks por su cuenta.
+execute:
+  enabled: false
+
+website:
+  title: "Vibe Coding para Humanistas"
+  description: "Programar con IA sin saber programar. Curso para Humanidades y Ciencias Sociales."
+  site-url: https://agusnieto77.github.io/curso_vibe_coding/
+  repo-url: https://github.com/agusnieto77/curso_vibe_coding
+  page-navigation: true
+  navbar:
+    background: primary
+    pinned: true
+    left:
+      - href: index.qmd
+        text: Inicio
+    right:
+      - icon: github
+        href: https://github.com/agusnieto77/curso_vibe_coding
+        aria-label: Repositorio en GitHub
+  page-footer:
+    center: "Vibe Coding para Humanistas — material del curso. Corpus de ejemplo sintético."
+  sidebar:
+    style: docked
+    search: true
+    collapse-level: 1
+    contents:
+      - href: index.qmd
+        text: "Inicio"
+      - section: "1 · Introducción al vibe coding"
+        contents:
+          - href: sesion-01-introduccion-al-vibe-coding/r.qmd
+            text: "R"
+          - href: sesion-01-introduccion-al-vibe-coding/python.ipynb
+            text: "Python"
+      - section: "2 · Cómo pedir código en lenguaje natural"
+        contents:
+          - href: sesion-02-pedir-codigo-en-lenguaje-natural/r.qmd
+            text: "R"
+          - href: sesion-02-pedir-codigo-en-lenguaje-natural/python.ipynb
+            text: "Python"
+      - section: "3 · Primeros scripts sin saber programar"
+        contents:
+          - href: sesion-03-primeros-scripts/r.qmd
+            text: "R"
+          - href: sesion-03-primeros-scripts/python.ipynb
+            text: "Python"
+      - section: "4 · Automatización de tareas sobre corpus"
+        contents:
+          - href: sesion-04-automatizacion-de-corpus/r.qmd
+            text: "R"
+          - href: sesion-04-automatizacion-de-corpus/python.ipynb
+            text: "Python"
+      - section: "5 · IA y análisis textual"
+        contents:
+          - href: sesion-05-analisis-textual/r.qmd
+            text: "R"
+          - href: sesion-05-analisis-textual/python.ipynb
+            text: "Python"
+      - section: "6 · Visualización de datos con IA"
+        contents:
+          - href: sesion-06-visualizacion-de-datos/r.qmd
+            text: "R"
+          - href: sesion-06-visualizacion-de-datos/python.ipynb
+            text: "Python"
+      - section: "7 · Buenas prácticas y validación"
+        contents:
+          - href: sesion-07-buenas-practicas-y-validacion/r.qmd
+            text: "R"
+          - href: sesion-07-buenas-practicas-y-validacion/python.ipynb
+            text: "Python"
+      - section: "8 · Taller de aplicación final"
+        contents:
+          - href: sesion-08-taller-final/r.qmd
+            text: "R"
+          - href: sesion-08-taller-final/python.ipynb
+            text: "Python"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "En esta página"
+    code-copy: true
+    code-overflow: wrap
+    anchor-sections: true

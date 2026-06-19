@@ -11,6 +11,7 @@ __pycache__/
 *.pyc
 
 # Quarto / render
+/_site/
 **/*_files/
 **/*.html
 /.quarto/
@@ -18,3 +19,5 @@ __pycache__/
 # Sistema
 .DS_Store
 Thumbs.db
+
+**/*.quarto_ipynb

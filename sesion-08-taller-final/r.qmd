@@ -14,8 +14,6 @@ Una sola regla, la de siempre en este curso: **la IA es la herramienta, vos diri
 
 > Si todavía no tenés tus datos a mano, podés ensayar la plantilla con el corpus del curso en `../datos/notas_prensa.csv`. Pero el objetivo real es que la completes con una fuente tuya.
 
----
-
 ## 0. Preparación del entorno
 
 Antes de arrancar, cargamos las herramientas que venimos usando en el curso. Si alguna no está instalada, descomentá la línea de `install.packages` una sola vez.
@@ -33,8 +31,6 @@ library(tidytext)    # análisis de texto, si tu fuente son palabras
 # Pista para vos: a partir de acá, todo el trabajo es sobre TUS datos.
 ```
 
----
-
 ## 1. Mi pregunta de investigación
 
 Toda investigación empieza con una pregunta, no con un dato. Antes de tocar el teclado, escribí en palabras claras qué querés averiguar. Una buena pregunta es concreta, acotada y se puede responder mirando tu fuente.
@@ -48,8 +44,6 @@ Toda investigación empieza con una pregunta, no con un dato. Antes de tocar el 
 > *Qué espero encontrar (mi hipótesis o corazonada): .........................*
 
 Ejemplo del curso, para que veas el tono (no lo copies, es solo de referencia): *"¿Cómo evoluciona la intensidad del conflicto portuario a lo largo de las semanas, según la frecuencia de palabras como 'paro' y 'acuerdo' en la prensa?"*
-
----
 
 ## 2. Mis datos: de dónde salen y qué forma tienen
 
@@ -65,8 +59,6 @@ Antes de cargar nada, describí tu fuente. Esto no es burocracia: es el primer p
 > - **Advertencias**: (¿está incompleto? ¿hay sesgos en cómo se recogió?) ........
 
 Acordate: si tus datos son sintéticos o de prueba, **decilo siempre**, como hacemos con el corpus del curso.
-
----
 
 ## 3. Cargar mis datos
 
@@ -96,8 +88,6 @@ datos <- read_csv("../datos/notas_prensa.csv")
 glimpse(datos)
 ```
 
----
-
 ## 4. Limpiar lo que haga falta
 
 Los datos reales vienen sucios: espacios de más, mayúsculas inconsistentes, restos de HTML, fechas con formato raro, columnas que sobran. Limpiar es parte del trabajo histórico, no un trámite previo. Adaptá estos pasos a la suciedad concreta de TU fuente.
@@ -120,8 +110,6 @@ nrow(datos)          # cuántas filas tenías
 nrow(datos_limpios)  # cuántas te quedaron
 glimpse(datos_limpios)
 ```
-
----
 
 ## 5. Analizar
 
@@ -156,8 +144,6 @@ palabras <- datos_limpios |>
 head(palabras, 15)
 ```
 
----
-
 ## 6. Visualizar
 
 Un gráfico no es decoración: es un argumento. Tiene que dejar ver de un vistazo eso que descubriste en el análisis. Adaptá el código a TU resultado (cambiá los datos de origen, los ejes y, sobre todo, el título y las etiquetas, que son las que comunican).
@@ -183,8 +169,6 @@ palabras |>
   theme_minimal()
 ```
 
----
-
 ## 7. Validar (el paso que separa la investigación del verso)
 
 La IA escribió buena parte de este código y vos lo adaptaste. Nada de eso es verdad hasta que lo chequeás a mano. Validar es volver a la fuente y confirmar que los números dicen lo que parecen decir.
@@ -204,8 +188,6 @@ datos_limpios |>
   nrow()                                  # ¿este número coincide con lo que esperabas?
 ```
 
----
-
 ## 8. Conclusiones
 
 Volvé a tu pregunta de la sección 1 y respondela con lo que encontraste. Sé honesto/a: incluí también lo que NO pudiste responder y los límites de tus datos. Eso no es debilidad, es rigor.
@@ -216,8 +198,6 @@ Volvé a tu pregunta de la sección 1 y respondela con lo que encontraste. Sé h
 > - **Qué muestra la evidencia**: ...........................................
 > - **Qué quedó afuera / qué no pude saber**: ...............................
 > - **Próximo paso si siguiera esta investigación**: ........................
-
----
 
 ## Checklist de cierre
 

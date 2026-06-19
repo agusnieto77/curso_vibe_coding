@@ -1,0 +1,47 @@
+---
+title: "Vibe Coding para Humanistas"
+subtitle: "Programar con IA sin saber programar"
+toc: false
+---
+
+Este es el material del curso para investigadoras e investigadores de **Humanidades y Ciencias Sociales** que quieren usar inteligencia artificial para escribir código en **lenguaje natural** —sin formación previa en programación— y aplicarlo a su propia investigación: limpiar corpus, automatizar tareas, analizar texto y visualizar datos.
+
+La apuesta es sencilla y la repito siempre: **la IA es una herramienta; quien investiga, dirige.** Acá no venimos a delegar el pensamiento, sino a ganar tiempo en lo mecánico para dedicarlo a lo que importa: las preguntas, las fuentes, la interpretación.
+
+## Cómo está armado este sitio
+
+Cada sesión viene en **dos sabores**, para que uses el que te quede más cómodo:
+
+- **R** — el ecosistema clásico para análisis de texto en Humanidades (tidyverse, tidytext, ggplot2).
+- **Python** — el más extendido en el mundo de la IA (pandas, matplotlib).
+
+Elegí uno y seguilo. No hace falta saber ninguno de los dos de antemano.
+
+::: {.callout-note}
+El sitio muestra el **código y los prompts**, pero no corre el código por vos: la idea es que lo ejecutes en tu máquina, lo toques y lo rompas. Así se aprende.
+:::
+
+## Programa
+
+| # | Sesión | Notebooks |
+|---|--------|-----------|
+| 1 | **Introducción al vibe coding** | [R](sesion-01-introduccion-al-vibe-coding/r.qmd) · [Python](sesion-01-introduccion-al-vibe-coding/python.ipynb) |
+| 2 | **Cómo pedir código en lenguaje natural** | [R](sesion-02-pedir-codigo-en-lenguaje-natural/r.qmd) · [Python](sesion-02-pedir-codigo-en-lenguaje-natural/python.ipynb) |
+| 3 | **Primeros scripts sin saber programar** | [R](sesion-03-primeros-scripts/r.qmd) · [Python](sesion-03-primeros-scripts/python.ipynb) |
+| 4 | **Automatización de tareas sobre corpus** | [R](sesion-04-automatizacion-de-corpus/r.qmd) · [Python](sesion-04-automatizacion-de-corpus/python.ipynb) |
+| 5 | **IA y análisis textual** | [R](sesion-05-analisis-textual/r.qmd) · [Python](sesion-05-analisis-textual/python.ipynb) |
+| 6 | **Visualización de datos con IA** | [R](sesion-06-visualizacion-de-datos/r.qmd) · [Python](sesion-06-visualizacion-de-datos/python.ipynb) |
+| 7 | **Buenas prácticas y validación** | [R](sesion-07-buenas-practicas-y-validacion/r.qmd) · [Python](sesion-07-buenas-practicas-y-validacion/python.ipynb) |
+| 8 | **Taller de aplicación final** | [R](sesion-08-taller-final/r.qmd) · [Python](sesion-08-taller-final/python.ipynb) |
+
+## El corpus de trabajo
+
+Todas las sesiones trabajan sobre el mismo **corpus de ejemplo**: un conjunto de notas de prensa sobre un conflicto portuario que va de la tensión inicial al acuerdo. Lo que limpiás en la sesión 4, lo analizás en la 5 y lo graficás en la 6: un solo relato atraviesa todo el curso.
+
+::: {.callout-warning}
+El corpus es **sintético** (ficticio), inspirado en la prensa y la conflictividad obrera del Río de la Plata. Sirve para aprender el método, no para citar como fuente.
+:::
+
+## Quién dicta el curso
+
+**Agustín Nieto** — Doctor en Historia, profesor en el Departamento de Sociología e investigador del CONICET. Especialista en análisis computacional de la conflictividad social y desarrollador de herramientas como [`ACEP`](https://github.com/agusnieto77/ACEP) y [`TweetScraperR`](https://github.com/agusnieto77/TweetScraperR).
