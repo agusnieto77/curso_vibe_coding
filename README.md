@@ -27,14 +27,14 @@ Investigadoras e investigadores en Humanidades y Ciencias Sociales que trabajan 
 
 | # | Sesión | Contenidos |
 |---|--------|------------|
-| 1 | **Introducción al vibe coding** | Programación tradicional vs. asistida; panorama de herramientas (ChatGPT, Claude, Copilot) |
-| 2 | **Cómo pedir código en lenguaje natural** | Principios de *prompting*, descripción de tareas, estrategias de iteración |
-| 3 | **Primeros scripts sin saber programar** | Estructura básica, ejecución y modificación del código generado |
-| 4 | **Automatización de tareas sobre corpus** | Limpieza textual, extracción, renombrado, conversión de formatos |
-| 5 | **IA y análisis textual** | Conteos, búsquedas, normalización, tokenización, detección de patrones |
-| 6 | **Visualización de datos con IA** | Gráficos de barras, series temporales, nubes de palabras |
-| 7 | **Buenas prácticas y validación** | Revisión de código, alucinaciones, límites metodológicos, documentación |
-| 8 | **Taller de aplicación final** | Ejercicio integrador orientado a los intereses de cada participante |
+| 1 | **[Introducción al vibe coding](sesion-01-introduccion-al-vibe-coding/)** | Programación tradicional vs. asistida; panorama de herramientas (ChatGPT, Claude, Copilot) |
+| 2 | **[Cómo pedir código en lenguaje natural](sesion-02-pedir-codigo-en-lenguaje-natural/)** | Principios de *prompting*, descripción de tareas, estrategias de iteración |
+| 3 | **[Primeros scripts sin saber programar](sesion-03-primeros-scripts/)** | Estructura básica, ejecución y modificación del código generado |
+| 4 | **[Automatización de tareas sobre corpus](sesion-04-automatizacion-de-corpus/)** | Limpieza textual, extracción, renombrado, conversión de formatos |
+| 5 | **[IA y análisis textual](sesion-05-analisis-textual/)** | Conteos, búsquedas, normalización, tokenización, detección de patrones |
+| 6 | **[Visualización de datos con IA](sesion-06-visualizacion-de-datos/)** | Gráficos de barras, series temporales, nubes de palabras |
+| 7 | **[Buenas prácticas y validación](sesion-07-buenas-practicas-y-validacion/)** | Revisión de código, alucinaciones, límites metodológicos, documentación |
+| 8 | **[Taller de aplicación final](sesion-08-taller-final/)** | Ejercicio integrador orientado a los intereses de cada participante |
 
 ---
 
