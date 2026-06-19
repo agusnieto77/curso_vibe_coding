@@ -1,0 +1,88 @@
+---
+title: "Cómo pedir código en lenguaje natural"
+lang: es
+format: html
+---
+
+## El problema de hoy
+
+Imaginate que tenés un corpus de notas de prensa sobre un conflicto portuario y querés empezar por lo más básico: **saber cuántas notas hay**. Parece una pregunta tonta, pero no lo es. Antes de analizar un archivo, una sabe cuántas piezas tiene. Es lo primero que hacés cuando abrís una caja en el archivo: contás los legajos.
+
+Acá no vamos a aprender a contar filas (eso lo resolvemos en dos líneas). Vamos a aprender algo mucho más importante: **cómo le pedimos a la IA que escriba ese código**. Porque el resultado NO depende de la IA: depende de cómo preguntás. La IA no adivina lo que tenés en la cabeza. Ejecuta lo que entiende de tu pedido. Si pedís mal, te devuelve algo que no sirve. Si pedís bien, te devuelve código que corre sobre TUS datos.
+
+Vamos a hacer el mismo pedido dos veces: una vaga y una precisa. Mirá la diferencia.
+
+> Nota: el corpus es **sintético** —ficticio, inspirado en la prensa y la conflictividad obrera del Río de la Plata—. Sirve para aprender el método, no para citar como fuente.
+
+## El prompt vago (el que falla)
+
+Este es el pedido que tira la mayoría de la gente cuando arranca. Lo escribe apurada, sin pensar:
+
+> "Contá cuántas notas hay."
+
+Pará un segundo y pensá como si fueras la IA. ¿Cuántas notas hay **dónde**? ¿En qué archivo? ¿Notas musicales, notas al pie, notas de prensa? ¿En qué formato está eso? ¿Qué te tengo que devolver, un número, una tabla, un gráfico?
+
+La IA no tiene tu contexto. No sabe que existe `notas_prensa.csv`, no sabe que es un CSV, no sabe que cada fila es una nota. Frente a un pedido así, va a **inventar**: te va a generar un dataframe de ejemplo de la nada, o te va a pedir que le aclares, o peor, va a alucinar un nombre de archivo que no existe y el código te va a tirar error. Eso no es la IA fallando: es el pedido que estaba mal.
+
+## El prompt preciso (el que funciona)
+
+Ahora el mismo objetivo, pero diciéndole TODO lo que necesita saber:
+
+> "Tengo un archivo CSV en la ruta `../datos/notas_prensa.csv`. Cada fila es una nota de prensa y la columna `id` la identifica. Escribime código en R, con tidyverse, que cargue ese CSV y me diga cuántas notas hay en total. Mostrame el número en una frase clara."
+
+Fijate todo lo que cambió. Le dimos el **archivo exacto** y su ruta. Le dijimos el **formato** (CSV). Le contamos qué representa cada fila y cuál es la columna clave. Le pedimos un **lenguaje** (R, tidyverse) y un **resultado esperado** (un número en una frase). Con eso, la IA no tiene que adivinar nada. Te devuelve esto:
+
+```{r}
+#| message: false
+# Cargamos tidyverse para leer y manipular el CSV
+library(tidyverse)
+
+# Leemos el archivo de notas de prensa desde la carpeta compartida de datos
+notas <- read_csv("../datos/notas_prensa.csv")
+
+# Contamos cuántas filas tiene: cada fila es una nota
+cantidad <- nrow(notas)
+
+# Mostramos el resultado en una frase clara, como pedimos
+cat("El corpus tiene", cantidad, "notas de prensa.\n")
+```
+
+## Qué hace y cómo lo validamos
+
+El código hace tres cosas, una por línea: lee el CSV, cuenta las filas con `nrow()`, y arma una frase con el número. Nada mágico.
+
+¿Y cómo sabemos que el número está bien? **No le creemos a la IA porque sí.** La IA se equivoca y alucina; el rigor lo ponés vos. Hay dos formas rápidas de chequear:
+
+1. **A ojo, sobre la fuente.** Abrí `notas_prensa.csv` en cualquier editor o planilla. Los `id` van de `n01` a `n22`. El encabezado es la primera fila y no cuenta. Si el código dice 22 y vos contás 22 a mano, estamos.
+2. **Con el propio código**, pidiéndole que muestre algo más:
+
+```{r}
+# Miramos los primeros y últimos id para confirmar el rango
+range(notas$id)
+
+# Y echamos un vistazo a la estructura: filas, columnas, tipos
+glimpse(notas)
+```
+
+Si `glimpse()` te dice "Rows: 22", coincide con `nrow()`, y los `id` arrancan en `n01` y terminan en `n22`, el número es confiable. Eso es **validar**: cruzar lo que dice el código con lo que dice la fuente. Nunca te quedes con el primer número que te tira la pantalla.
+
+## La anatomía de un buen pedido
+
+Lo que hicimos arriba no fue suerte. Un buen prompt tiene una estructura, y conviene tenerla siempre en la cabeza:
+
+- **Contexto:** quién sos y con qué estás trabajando. "Soy historiador, tengo un corpus de prensa en CSV."
+- **Tarea:** qué querés que haga, en un verbo claro. "Contá las filas."
+- **Formato / datos:** el archivo, la ruta, las columnas, el lenguaje. "El CSV está en `../datos/notas_prensa.csv`, la columna `id` identifica cada nota, escribilo en R."
+- **Ejemplo o resultado esperado:** cómo querés ver la respuesta. "Un número dentro de una frase."
+- **Iteración:** lo que pedís *después* de leer la respuesta, para ajustarla. Eso lo vemos abajo.
+
+No hace falta que cada prompt sea un párrafo enorme. Pero si la IA te devuelve cualquier cosa, casi siempre es porque le faltó uno de estos ingredientes.
+
+## Para jugar
+
+Probá pedirle a la IA estas variaciones y mirá cómo cambia el resultado:
+
+1. **Iterar sobre lo anterior:** "Ahora, además del total, decime cuántas notas hay por diario." Es el mismo corpus, pero le agregás una agrupación. Fijate que no volvés a explicarle todo: seguís la conversación.
+2. **Cambiar el formato de salida:** "En vez de una frase, mostrame el conteo por sección en una tabla ordenada de mayor a menor." Mismo dato, otra forma de verlo.
+
+En las dos, antes de creerle, validá a mano sobre el CSV. Ese reflejo —pedir, leer, chequear— es lo que separa a quien usa la IA con criterio de quien copia y pega a ciegas.

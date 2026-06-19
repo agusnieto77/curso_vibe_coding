@@ -1,0 +1,58 @@
+---
+title: "Sesión 1 — Introducción al vibe coding"
+lang: es
+format: html
+---
+
+## Abrimos la puerta
+
+Antes que nada: respirá. Hoy NO vamos a analizar datos, ni a contar palabras, ni a limpiar archivos. Hoy abrimos la puerta y nada más.
+
+Si venís de las Humanidades, lo más probable es que el código te resulte un territorio ajeno, hecho de símbolos raros y errores que no entendés. Te lo digo con todas las letras: eso se termina. No porque vayas a convertirte en programador/a de la noche a la mañana, sino porque ahora tenés una HERRAMIENTA nueva al lado. Y la herramienta se llama vibe coding.
+
+¿Qué es? Es escribir programas **conversando con una inteligencia artificial en tu propio idioma**. Vos describís lo que querés —"contame cuántas veces aparece la palabra *huelga* en este archivo"— y la IA te devuelve el código que lo hace. Vos dirigís, la IA ejecuta. La parte difícil de la sintaxis la pone ella; la pregunta de investigación, el rigor y la validación los ponés vos. Esa división de tareas es TODO. No la pierdas de vista nunca.
+
+El problema que resolvemos hoy es el más básico y el más importante de todos: ver con tus propios ojos que **el código corre**. Que apretás un botón y la máquina te contesta. Una vez que ves eso, el miedo se desinfla y empieza el aprendizaje de verdad.
+
+## El prompt
+
+Cuando arrancás de cero, la mejor primera conversación con la IA no es pedirle código todavía. Es pedirle que te ubique. Algo así:
+
+> Soy historiador/a y no sé programar. Explicame qué es "vibe coding" con una analogía sencilla, y decime con honestidad qué cosas SÍ puede hacer por mí una IA que escribe código y qué cosas NO. Sin venderme humo.
+
+Fijate que ese prompt hace tres cosas: te presentás (le das contexto de quién sos), pedís una analogía (para entender, no para impresionar) y exigís honestidad sobre los límites. Un buen prompt siempre dice quién pregunta y para qué.
+
+## El "hola mundo" en R
+
+Ahora sí, el clásico de los clásicos: el `hola mundo`. Es el primer programa que escribe todo el mundo, y existe por una sola razón: comprobar que la herramienta funciona. Acá va el código que la IA nos devolvería en R. Leelo despacio, está comentado línea por línea.
+
+```{r}
+# print() es la orden que le da voz a R: muestra en pantalla lo que le pongas adentro.
+# Entre comillas va el texto, que en programación se llama "cadena de caracteres".
+print("Hola mundo, soy quien investiga y la máquina me responde")
+
+# R.version.string guarda, como texto, la versión de R que estás usando.
+# Lo mostramos para confirmar que R está vivo y trabajando para nosotros.
+print(R.version.string)
+```
+
+Eso es un programa. Dos líneas. La primera saluda; la segunda le pregunta a R "¿quién sos y qué versión tenés?" y R contesta. Si ves dos renglones de respuesta debajo del bloque, FELICITACIONES: el código corrió.
+
+## Qué hace y cómo lo validamos
+
+¿Qué pasó ahí? `print()` es una **función**: una orden con un nombre y un par de paréntesis donde le pasás lo que querés que haga. Le pasamos un texto y lo mostró. Después le pedimos la versión de R y nos la dio.
+
+¿Cómo validás que esto no es magia ni una alucinación de la IA? Muy fácil, y este reflejo lo vas a usar TODA tu vida con estas herramientas:
+
+- **Leé la salida con tus ojos.** ¿El saludo es exactamente el texto que escribiste entre comillas? Tiene que coincidir carácter por carácter.
+- **Cambiá algo y volvé a correr.** Editá el saludo, poné tu nombre, corré de nuevo. Si la salida cambia igual que el texto, entendiste el mecanismo.
+- **Desconfiá siempre.** La IA se equivoca y, peor, a veces se equivoca con total seguridad. El código que te devuelve no es palabra santa: corre, mirá, compará. El rigor lo ponés vos, igual que cuando contrastás una fuente con otra.
+
+Esa última idea es el corazón del curso. La IA es rapidísima y muchas veces brillante, pero NO sabe si tu resultado tiene sentido histórico. Eso solo lo sabés vos.
+
+## Para jugar
+
+Probá pedirle estas variaciones a la IA y mirá qué te devuelve:
+
+1. "Modificá el `hola mundo` para que además me muestre la fecha y hora de hoy en R, y explicame qué función usás para eso."
+2. "Explicame, como si tuviera doce años, qué diferencia hay entre el texto que va entre comillas y un comando como `R.version.string` que va sin comillas."

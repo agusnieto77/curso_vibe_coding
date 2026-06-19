@@ -1,0 +1,237 @@
+---
+title: "Sesión 4 — Limpiar y ordenar un corpus en lote (R)"
+lang: es
+format: html
+---
+
+## El problema: el archivo crudo nunca viene prolijo
+
+Cualquiera que haya laburado con fuentes lo sabe: bajás recortes de prensa, te
+pasan un lote de transcripciones, copiás notas de una web vieja… y lo que te
+queda es un desastre. Archivos con nombres tipo `Nota 1 (copia).txt`, espacios
+de más, líneas en blanco que sobran, y restos de HTML que se colaron al copiar
+y pegar: esos `<p>`, esos `&nbsp;`, esos `&amp;` que ensucian todo.
+
+Limpiar UN archivo a mano es tedioso pero se aguanta. ¿Y si son veinte? ¿Y si
+son doscientos? Ahí es donde la cosa se vuelve imposible a mano y donde la
+automatización deja de ser un lujo para ser una necesidad metodológica. Porque
+el riesgo no es solo el tiempo: si limpiás cien archivos a mano, vas a limpiar
+cada uno con un criterio un poco distinto. **La máquina, en cambio, aplica
+SIEMPRE el mismo criterio.** Eso es reproducibilidad, y la reproducibilidad es
+la base de que tu trabajo se pueda revisar.
+
+En esta sesión vamos a recorrer una carpeta de archivos sucios
+(`../datos/crudos/`), limpiarlos en lote, renombrarlos a un patrón consistente
+(`nota_01.txt`, `nota_02.txt`, …) y guardarlos prolijos en una carpeta nueva.
+Los originales no se tocan: vos dirigís, la herramienta ejecuta, y siempre te
+queda el rastro para volver atrás.
+
+> **Ojo:** el corpus es sintético, inventado para el curso, inspirado en la
+> prensa y la conflictividad obrera del Río de la Plata. Sirve para aprender el
+> método, no para citar como fuente.
+
+## Lo que hay en la carpeta sucia
+
+Antes de automatizar nada, miremos qué tenemos. Es la primera regla: no le
+pidas a la IA que limpie algo que vos no miraste primero.
+
+```{r}
+#| message: false
+#| warning: false
+
+# stringr nos da funciones simples y predecibles para manipular texto
+library(stringr)
+
+# Le decimos a R dónde están los archivos crudos (ruta relativa a esta carpeta)
+carpeta_crudos <- "../datos/crudos"
+
+# list.files() lista los archivos; con pattern filtramos solo los .txt
+archivos <- list.files(carpeta_crudos, pattern = "\\.txt$", full.names = TRUE)
+
+# Veamos los nombres tal cual están: desprolijos, con espacios y mayúsculas
+basename(archivos)
+```
+
+Fijate los nombres: `Nota 1 (copia).txt`, `NOTA_2.txt`, `nota3 FINAL.txt`.
+Mayúsculas, espacios, paréntesis, numeración inconsistente. Un caos típico de
+una carpeta real.
+
+## El prompt
+
+Esto es lo que le pediríamos a la IA, en lenguaje natural, como si le
+explicáramos la tarea a un colega que sabe programar:
+
+> "Tengo una carpeta con varios archivos `.txt` de notas de prensa que están
+> sucios. Necesito un script en R que recorra TODOS los `.txt` de la carpeta
+> `../datos/crudos/`, que a cada uno le saque los restos de HTML (las etiquetas
+> como `<p>` y las entidades como `&nbsp;` y `&amp;`), que colapse los espacios
+> de más en uno solo y que elimine las líneas vacías que sobran. Que guarde los
+> resultados limpios en una carpeta nueva `./salida/`, renombrados con el patrón
+> `nota_01.txt`, `nota_02.txt`, etcétera. **Importante: no quiero que pise los
+> archivos originales.** Comentá el código en español."
+
+## El código que la IA nos devolvió
+
+Lo primero: una función que recibe un texto sucio y devuelve uno limpio. La
+separamos del resto porque así el criterio de limpieza queda en UN solo lugar,
+clarito y revisable.
+
+```{r}
+# Esta función concentra TODO el criterio de limpieza.
+# Recibe un vector de líneas de texto y devuelve el texto ya prolijo.
+limpiar_texto <- function(lineas) {
+  # Unimos todas las líneas en un solo bloque para trabajar más cómodo
+  texto <- str_c(lineas, collapse = "\n")
+
+  # 1) Sacamos las etiquetas HTML: todo lo que va entre < y >
+  texto <- str_replace_all(texto, "<[^>]+>", " ")
+
+  # 2) Reemplazamos las entidades HTML más comunes por su equivalente
+  texto <- str_replace_all(texto, "&nbsp;", " ")  # espacio
+  texto <- str_replace_all(texto, "&amp;", "&")   # ampersand
+  texto <- str_replace_all(texto, "&lt;", "<")
+  texto <- str_replace_all(texto, "&gt;", ">")
+
+  # 3) Colapsamos cualquier corrida de espacios o tabs en un solo espacio
+  texto <- str_replace_all(texto, "[ \t]+", " ")
+
+  # 4) Sacamos espacios al principio y al final de cada línea
+  texto <- str_replace_all(texto, "(?m)^ +| +$", "")
+
+  # 5) Colapsamos las líneas vacías repetidas: nunca más de un salto doble
+  texto <- str_replace_all(texto, "\n{2,}", "\n")
+
+  # 6) Recortamos espacios y saltos sueltos al principio y final de todo
+  str_trim(texto)
+}
+```
+
+Ahora el script que recorre la carpeta, aplica la función a cada archivo y
+guarda el resultado renombrado. Acá está el corazón de la automatización: el
+bucle que hace de una lo que harías a mano archivo por archivo.
+
+```{r}
+# Definimos la carpeta de salida (relativa a esta carpeta de la sesión).
+# OJO: esta carpeta NO existe todavía; la creamos desde el código al correr.
+# Por eso no se versiona: es un resultado, no una fuente. (Va en .gitignore.)
+carpeta_salida <- "./salida"
+
+# dir.create la crea; showWarnings = FALSE evita el aviso si ya existía
+dir.create(carpeta_salida, showWarnings = FALSE)
+
+# Recorremos cada archivo con su índice (seq_along nos da 1, 2, 3, ...)
+for (i in seq_along(archivos)) {
+
+  # Leemos el archivo crudo línea por línea
+  lineas <- readLines(archivos[i], encoding = "UTF-8", warn = FALSE)
+
+  # Aplicamos nuestra función de limpieza
+  texto_limpio <- limpiar_texto(lineas)
+
+  # Armamos el nombre nuevo con el patrón nota_01, nota_02, ...
+  # sprintf("%02d", i) rellena con cero a la izquierda: 1 -> "01"
+  nombre_nuevo <- sprintf("nota_%02d.txt", i)
+  ruta_destino <- file.path(carpeta_salida, nombre_nuevo)
+
+  # Escribimos el texto limpio en la carpeta de salida.
+  # Como escribimos en OTRA carpeta, los originales quedan intactos.
+  writeLines(texto_limpio, ruta_destino, useBytes = TRUE)
+
+  # Avisamos por consola qué pasó con cada archivo (rastro de lo hecho)
+  cat("Limpié", basename(archivos[i]), "->", nombre_nuevo, "\n")
+}
+```
+
+## Qué hace y cómo lo validamos
+
+El script hizo, en segundos, lo que vos harías abriendo cada archivo,
+borrando etiquetas y guardando con otro nombre. Pero **automatizar no es confiar
+a ciegas.** Validar es parte del trabajo, no un extra. Veamos qué quedó.
+
+```{r}
+# Listamos lo que se generó en la carpeta de salida
+list.files(carpeta_salida)
+```
+
+Tres archivos con nombres consistentes. Ahora abrimos uno para ver el contenido
+limpio:
+
+```{r}
+# Leemos el primer archivo limpio y lo mostramos
+cat(readLines(file.path(carpeta_salida, "nota_01.txt"), warn = FALSE), sep = "\n")
+```
+
+Y comparemos con el original para confirmar que la limpieza hizo lo que
+queríamos: que ya no haya `<p>`, ni `&nbsp;`, ni `&amp;`, ni espacios de más.
+
+```{r}
+# Comparación lado a lado: contamos cuántos restos de HTML quedan
+# en los originales vs. en los limpios. Si limpió bien, los limpios dan 0.
+contar_basura <- function(rutas) {
+  sapply(rutas, function(r) {
+    txt <- str_c(readLines(r, warn = FALSE), collapse = "\n")
+    # Sumamos cuántas etiquetas y entidades HTML aparecen
+    str_count(txt, "<[^>]+>|&nbsp;|&amp;")
+  })
+}
+
+cat("Restos de HTML en los ORIGINALES:\n")
+print(contar_basura(archivos))
+
+cat("\nRestos de HTML en los LIMPIOS:\n")
+print(contar_basura(list.files(carpeta_salida, full.names = TRUE)))
+```
+
+Si los originales tienen números mayores a cero y los limpios dan todos cero,
+la limpieza funcionó. Esa comparación es tu validación: no creés que limpió,
+lo **comprobás**. Y como los originales siguen ahí con su basura, sabés que no
+los tocamos.
+
+## Opcional: juntar todo en un solo CSV
+
+A veces no querés tres archivos sueltos sino una tabla con todo junto, lista
+para analizar en la próxima sesión. Pasemos el corpus limpio a un único CSV con
+una fila por nota.
+
+```{r}
+#| message: false
+#| warning: false
+
+library(readr)   # para escribir el CSV
+library(tibble)  # para armar la tabla
+
+# Listamos los archivos limpios
+limpios <- list.files(carpeta_salida, pattern = "\\.txt$", full.names = TRUE)
+
+# Armamos una tabla: una fila por archivo, con su id y su texto completo
+corpus <- tibble(
+  id = basename(limpios),
+  texto = sapply(limpios, function(r) {
+    str_c(readLines(r, warn = FALSE), collapse = " ")
+  })
+)
+
+# Guardamos el CSV en la carpeta de salida
+write_csv(corpus, file.path(carpeta_salida, "corpus_limpio.csv"))
+
+# Lo miramos para confirmar
+corpus
+```
+
+Ahora tenés una tabla limpia, con un identificador prolijo por nota y el texto
+listo para contar palabras, buscar términos o lo que venga. Pasamos de una
+carpeta caótica a un dataset ordenado, y todo el proceso quedó escrito y
+repetible.
+
+## Para jugar
+
+Probá pedirle a la IA estas variaciones y mirá cómo cambia el resultado:
+
+1. **"Agregá una columna `largo` al CSV con la cantidad de caracteres de cada
+   nota, y ordená la tabla de la más larga a la más corta."** Te sirve para ver
+   de un vistazo qué notas tienen más texto.
+
+2. **"Antes de guardar, hacé que el script avise si alguna nota quedó vacía
+   después de limpiar (por ejemplo, si era pura basura HTML)."** Esto te protege
+   de un error silencioso: que un archivo se "limpie" hasta quedar en nada y vos
+   no te enteres.

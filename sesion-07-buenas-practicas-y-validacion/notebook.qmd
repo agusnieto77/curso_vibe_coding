@@ -1,0 +1,241 @@
+---
+title: "Sesión 7 — Buenas prácticas y validación: no le creas a la IA sin chequear"
+lang: es
+format: html
+---
+
+## Por qué esta es, quizá, la sesión más importante
+
+Mirá, llegamos a la sesión que más me importa de todo el curso. Y no es por capricho.
+
+En las sesiones anteriores le pedimos código a la IA y, casi siempre, "funcionó":
+corrió, no tiró error, nos devolvió un número, un gráfico, una tabla. Y ahí está
+la TRAMPA. Que un código corra NO significa que esté bien. Significa apenas que
+no se rompió. Son dos cosas completamente distintas.
+
+Cuando vos investigás un conflicto portuario, una huelga, la prensa de una época,
+cada número que reportás es una afirmación sobre el pasado. Si decís "la palabra
+*paro* aparece 30 veces en la prensa", eso es un dato que alguien va a citar, que
+va a entrar en tu argumento, que va a sostener una conclusión. Si ese 30 está mal
+porque el código contó de más, tu argumento se construye sobre arena.
+
+La IA se equivoca. Alucina funciones que no existen. Escribe código plausible que
+hace algo SUTILMENTE distinto de lo que pediste. Y lo hace con una seguridad
+absoluta, sin avisarte. El rigor no lo pone la herramienta: lo ponés vos, que sos
+quien investiga. Hoy aprendemos a desconfiar con método.
+
+> Trabajamos sobre `../datos/notas_prensa.csv`, un corpus SINTÉTICO (ficticio)
+> de 22 notas que narran un conflicto en plantas pesqueras: tensión, asamblea,
+> paro, negociación y acuerdo. Es chico A PROPÓSITO: con 22 notas todavía podés
+> validar a mano. Esa es justamente la idea de hoy.
+
+## Primero, cargamos el corpus y lo miramos
+
+Antes de validar nada, tenemos que poder VER los datos. Validar a ciegas no es
+validar.
+
+```{r}
+#| message: false
+#| warning: false
+
+# Cargamos las librerías del tidyverse para manipular datos y texto
+library(readr)
+library(dplyr)
+library(stringr)
+
+# Leemos el corpus de notas de prensa (ruta relativa desde esta carpeta)
+notas <- read_csv("../datos/notas_prensa.csv")
+
+# ¿Cuántas notas tenemos y qué columnas?
+dim(notas)
+names(notas)
+```
+
+```{r}
+# Miramos las primeras filas para entender con qué trabajamos
+notas |>
+  select(id, fecha, titular) |>
+  head(5)
+```
+
+22 notas, columnas claras. Bien. Tenemos el terreno bajo control.
+
+## El prompt: el pedido que le hicimos a la IA
+
+Imaginá que queremos saber cuántas veces aparece la palabra **paro** en los textos
+del corpus, para medir la intensidad del conflicto a lo largo del tiempo. Le
+escribimos a la IA algo como esto:
+
+> "Tengo un data frame en R llamado `notas` con una columna `texto`. Contá cuántas
+> veces aparece la palabra *paro* en todos los textos y devolveme el total."
+
+## El código "que la IA nos devolvió"
+
+Y la IA, servicial, nos devolvió esto. Léelo despacio, como si fueras a corregir
+el trabajo de otra persona:
+
+```{r}
+# --- VERSIÓN DE LA IA (¡ATENCIÓN: tiene un error sutil!) ---
+
+# Cuenta cuántas veces aparece "paro" en cada texto y suma el total
+total_paro_ia <- sum(str_count(notas$texto, "paro"))
+
+total_paro_ia
+```
+
+Nos da un número. Corre sin error. Se ve perfecto. Y si lo copiás y lo pegás en
+tu artículo, estás reportando un dato MAL.
+
+## Cómo detectamos el problema (esto es lo que hay que aprender)
+
+¿Cómo nos damos cuenta? No por intuición mágica, sino con TRES movimientos
+concretos que podés repetir siempre.
+
+### Movimiento 1: leer el código crítico, no solo correrlo
+
+La línea clave es `str_count(notas$texto, "paro")`. La pregunta honesta es:
+¿qué busca exactamente `str_count`? Busca el PATRÓN `"paro"` como subcadena, es
+decir, esa secuencia de letras AUNQUE esté metida adentro de otra palabra.
+
+Pensá qué palabras de un texto sobre conflictos contienen la cadena `paro`:
+**partici*paro*n** (participaron), **am*paro*** (amparo), **dis*paro***
+(disparo), **re*paro*** (reparo)... Todas esas suman al conteo sin ser la
+palabra *paro*. En NUESTRO corpus, la que se cuela es **participaron**.
+
+### Movimiento 2: validar a mano un caso sobre el corpus chico
+
+Acá está la ventaja de un corpus de 22 notas: podemos chequear de verdad. Vamos
+a buscar QUÉ textos contienen la cadena "paro" y mirarlos con nuestros ojos.
+
+```{r}
+# Traemos las filas donde aparece la cadena "paro" y vemos el texto completo
+sospechosos <- notas |>
+  filter(str_detect(texto, "paro")) |>
+  select(id, texto)
+
+sospechosos
+```
+
+```{r}
+# Para el ojo humano: marcamos en cada texto los pedazos que matchean "paro"
+# str_extract_all nos devuelve TODOS los fragmentos que la máquina contó como "paro"
+str_extract_all(notas$texto, "\\w*paro\\w*") |>
+  unlist() |>
+  unique()
+```
+
+¿Ves? Entre los matches aparece **participaron**, que NO es la palabra *paro*
+del conflicto sindical: es el verbo *participar* en pasado. La máquina la contó
+igual. El número estaba inflado. (En otros corpus se te van a colar *amparo*,
+*disparo*, *reparo*: el problema es siempre el mismo, la búsqueda por subcadena.)
+
+### Movimiento 3: comparar conteos
+
+Ahora contemos bien y comparemos. La diferencia es la prueba del delito.
+
+## La versión corregida: buscar la PALABRA completa
+
+El arreglo es decirle a la máquina "quiero la palabra *paro*, no la cadena de
+letras". En expresiones regulares, los límites de palabra se escriben `\\b`.
+
+```{r}
+# --- VERSIÓN CORREGIDA ---
+
+# \\b marca un "límite de palabra": antes y después de "paro" no puede haber letra.
+# Además normalizamos a minúsculas por si hubiera "Paro" al inicio de una oración.
+patron <- "\\bparo\\b"
+
+total_paro_ok <- notas$texto |>
+  str_to_lower() |>
+  str_count(patron) |>
+  sum()
+
+total_paro_ok
+```
+
+```{r}
+# La prueba del delito: cuántas coincidencias de más contaba la versión de la IA
+data.frame(
+  version_ia      = total_paro_ia,
+  version_correcta = total_paro_ok,
+  diferencia      = total_paro_ia - total_paro_ok
+)
+```
+
+Esa `diferencia` son las palabras que la versión ingenua contó de más. Si fuera
+cero, igual el chequeo valió la pena: ahora SABÉS que está bien, no lo SUPONÉS.
+
+## Segundo peligro: la función que no existe (alucinación)
+
+Hay un error todavía más traicionero: la IA inventa funciones que SUENAN
+perfectas pero no existen. A esto le decimos *alucinación*. Por ejemplo, podría
+decirte con total seguridad: "usá `str_count_words()` para contar palabras
+completas". Suena lógico, ¿no? El problema es que **esa función no existe** en
+`stringr`.
+
+¿Cómo se valida esto en dos segundos? Preguntándole a R, no a la IA:
+
+```{r}
+#| error: true
+
+# ¿Existe la función que la IA me sugirió? Le preguntamos directamente a R.
+exists("str_count_words")
+```
+
+Devuelve `FALSE`. No existe. La regla es simple: **antes de confiar en una
+función, verificá que exista de verdad** con `?nombre_funcion` en la consola, o
+con `exists("nombre_funcion")`, o leyendo la documentación del paquete. Si la IA
+te nombra una función, esa es una afirmación que tenés que comprobar, no creer.
+
+## Cómo documentar para que esto sea reproducible
+
+Encontraste el error, lo corregiste, validaste. Falta el último paso, el que
+diferencia un cálculo casero de un resultado de investigación: dejar constancia
+de QUÉ hiciste, con QUÉ datos y CÓMO se vuelve a correr. Si dentro de seis meses
+(o un colega, o un evaluador) no puede reproducir tu número, el número no vale.
+
+Una buena nota de reproducibilidad responde tres preguntas: qué datos, qué
+versiones, cómo correr.
+
+```{r}
+# --- NOTA DE REPRODUCIBILIDAD ---
+# Qué hace este script: cuenta apariciones de la PALABRA "paro" (no subcadenas)
+#   en la columna 'texto' del corpus de prensa, normalizando a minúsculas.
+# Datos: ../datos/notas_prensa.csv (corpus SINTÉTICO, 22 notas, conflicto pesquero).
+# Cómo correr: abrir este .qmd en RStudio y hacer "Render", o ejecutar las celdas
+#   en orden de arriba hacia abajo. Requiere: readr, dplyr, stringr.
+
+# Dejamos registro de las versiones con las que ESTE resultado fue calculado.
+# Si alguien obtiene otro número, lo primero a revisar son estas versiones.
+sessionInfo()
+```
+
+Ese `sessionInfo()` es oro: deja por escrito tu versión de R y de cada paquete.
+Pegalo en un apéndice, en un README, en una nota al pie. Es barato y te salva.
+
+## Que hace y cómo lo validamos (resumen del método)
+
+Repasemos el método, porque es lo que te llevás de hoy:
+
+1. **Leé el código crítico**, no solo lo corras. La línea que produce tu número
+   es la que más atención merece.
+2. **Validá a mano sobre el corpus chico**: buscá los casos, miralos con tus
+   ojos, comprobá un ejemplo concreto.
+3. **Compará conteos**: la versión ingenua contra la corregida. La diferencia te
+   muestra el error.
+4. **Verificá que las funciones existan**: `exists()`, `?funcion`, la doc. No
+   creas en funciones por cómo suenan.
+5. **Documentá**: qué datos, qué versiones, cómo correr. Reproducibilidad o no
+   es investigación.
+
+## Para jugar
+
+Probá pedirle a la IA estas variaciones y validá cada resultado con el método de
+arriba:
+
+1. "Contá ahora la palabra *huelga* y la palabra *acuerdo* por separado, usando
+   límites de palabra, y mostrame las dos al lado." (Fijate si vuelve a usar
+   `\\b` o si recae en la búsqueda por subcadena.)
+2. "Revisá este código y decime qué puede salir mal antes de que lo use." Pegale
+   la versión ingenua del principio y mirá si DETECTA el problema del *amparo*.
+   A veces lo encuentra; a veces no. Por eso el chequeo final siempre es tuyo.

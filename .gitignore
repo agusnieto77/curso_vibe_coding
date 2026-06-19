@@ -1,0 +1,20 @@
+# Resultados que generan los notebooks al correr (no se versionan)
+sesion-*/salida/
+**/salida/
+
+# Artefactos de ejecución
+.Rhistory
+.RData
+.Rproj.user/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Quarto / render
+**/*_files/
+**/*.html
+/.quarto/
+
+# Sistema
+.DS_Store
+Thumbs.db

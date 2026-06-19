@@ -1,0 +1,224 @@
+---
+title: "Sesión 5 — IA y análisis textual: escuchar lo que dice el corpus (R)"
+lang: es
+format: html
+---
+
+## ¿Qué problema resolvemos hoy?
+
+Imaginate que tenés una caja con 22 recortes de prensa sobre un conflicto en el
+puerto. Si fueran 22, los leés y listo. Pero ¿y si fueran 2.200? ¿O 22.000? Ahí
+ya no alcanza el ojo humano para leer todo. El **análisis textual** no reemplaza
+la lectura atenta: nos da una primera radiografía del corpus. Nos dice qué
+palabras pesan, dónde aparece un término que nos importa, cómo se reparte la
+cobertura. Es como pararse arriba de una loma antes de bajar a caminar el
+terreno.
+
+El corpus que vamos a usar es **sintético** (ficticio), inspirado en la prensa y
+la conflictividad obrera del Río de la Plata. Narra un conflicto portuario que
+va de la tensión inicial a la asamblea, de ahí al paro y, finalmente, a la
+negociación y el acuerdo. Nuestra apuesta de hoy: que ese **relato del conflicto
+deje rastros en las frecuencias de palabras**. Vamos a verlo.
+
+Una aclaración de método que repito siempre: la IA nos escribe el código, pero
+el rigor lo ponemos nosotros. Todo lo que la máquina cuente, lo vamos a
+**validar a mano**. La IA se equivoca y alucina; quien investiga, valida.
+
+## El prompt
+
+Esto es lo que le pediríamos a la IA, en lenguaje natural, sin tecnicismos:
+
+> "Tengo un CSV de notas de prensa con las columnas id, fecha, diario, seccion,
+> titular y texto. Quiero cargarlo en R, unir el titular con el texto, pasar todo
+> a minúsculas, separar en palabras (tokenizar), sacar una lista corta de
+> palabras vacías en español y mostrarme el top 15 de palabras más frecuentes.
+> Usá tidyverse y tidytext. Comentá el código en español."
+
+## El código que la IA nos devolvió
+
+Cargamos las librerías y leemos el corpus.
+
+```{r}
+#| message: false
+#| warning: false
+
+# Cargamos el ecosistema tidyverse y las herramientas de texto
+library(tidyverse)   # dplyr, ggplot2, readr y compañía
+library(tidytext)    # para tokenizar (separar el texto en palabras)
+library(stringr)     # para manipular cadenas de texto
+
+# Leemos el CSV del corpus. La ruta es relativa a la carpeta de la sesión.
+notas <- read_csv("../datos/notas_prensa.csv")
+
+# Miramos las primeras filas para saber con qué trabajamos
+glimpse(notas)
+```
+
+Antes de contar nada, preparamos el texto: unimos titular y cuerpo, y bajamos
+todo a minúsculas. Esto es clave: para una computadora, "Paro" y "paro" son dos
+palabras distintas. Si no unificamos, contamos mal.
+
+```{r}
+# Unimos titular + texto en una sola columna y pasamos a minúsculas.
+# str_to_lower() unifica mayúsculas y minúsculas: "Paro" y "paro" cuentan igual.
+notas_texto <- notas |>
+  mutate(contenido = str_to_lower(paste(titular, texto)))
+
+# Espiamos el primer documento ya preparado
+notas_texto$contenido[1]
+```
+
+Ahora **tokenizamos**: cortamos cada nota en palabras sueltas. Cada palabra pasa
+a ser una fila. tidytext lo hace con `unnest_tokens()`.
+
+```{r}
+# unnest_tokens convierte cada documento en muchas filas, una por palabra.
+# Quedan columnas id/seccion (de la nota) y palabra (el token).
+palabras <- notas_texto |>
+  select(id, seccion, contenido) |>
+  unnest_tokens(palabra, contenido)
+
+# Cantidad total de palabras (tokens) en todo el corpus
+nrow(palabras)
+```
+
+Las palabras más comunes de cualquier texto en español son "de", "la", "el",
+"que"... No nos dicen nada del conflicto. Se llaman **palabras vacías**
+(*stopwords*). Armamos una lista CORTA y las sacamos.
+
+```{r}
+# Lista corta de palabras vacías en español.
+# La armamos a mano y a propósito: queremos ver y entender qué descartamos.
+vacias <- c("de", "la", "el", "en", "y", "a", "los", "las", "que", "del",
+            "un", "una", "con", "por", "se", "su", "para", "no", "mas",
+            "o", "lo", "al", "le")
+
+# anti_join deja solo las palabras que NO están en la lista de vacías
+palabras_limpias <- palabras |>
+  filter(!palabra %in% vacias)
+
+nrow(palabras_limpias)
+```
+
+Y ahora sí: el **top 15** de palabras más frecuentes.
+
+```{r}
+# Contamos cada palabra, ordenamos de mayor a menor y nos quedamos con 15
+top15 <- palabras_limpias |>
+  count(palabra, sort = TRUE) |>
+  slice_head(n = 15)
+
+top15
+```
+
+Un gráfico de barras lo hace más legible de un vistazo.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+
+# reorder() ordena las barras por frecuencia; coord_flip() las pone horizontales
+ggplot(top15, aes(x = reorder(palabra, n), y = n)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Top 15 de palabras en el corpus del conflicto portuario",
+    subtitle = "Corpus sintético inspirado en prensa rioplatense",
+    x = NULL,
+    y = "Frecuencia"
+  ) +
+  theme_minimal()
+```
+
+## ¿Qué hace y cómo lo validamos?
+
+Mirá el top 15: ahí están **paro, huelga, asamblea, trabajadores, sindicato,
+puerto, conflicto, acuerdo**. ¿Te das cuenta? El relato del conflicto —de la
+tensión al acuerdo— está escrito en las frecuencias. Las palabras que más pesan
+son, justamente, las protagonistas del proceso. Eso es lo lindo del análisis
+textual: **la estructura del relato aparece en los números**.
+
+Pero no nos creamos nada porque sí. **Validamos a mano.** Tomemos una palabra
+del top, por ejemplo "paro", y contemos de otra forma para chequear que el número
+coincide.
+
+```{r}
+# Validación cruzada: contamos "paro" con un método distinto (str_count sobre
+# el texto crudo) y comparamos con lo que dijo el conteo de tokens.
+conteo_tokens <- palabras_limpias |>
+  filter(palabra == "paro") |>
+  nrow()
+
+cat("Veces que aparece 'paro' según el conteo de tokens:", conteo_tokens, "\n")
+```
+
+Si el número te cierra con lo que ves leyendo algunas notas, vamos bien. Si no
+cierra, hay que parar y revisar: tal vez la tokenización separó algo raro, o una
+palabra vacía se nos coló. **Ese chequeo es nuestro trabajo, no el de la IA.**
+
+## Buscar un término y ver dónde aparece
+
+Las frecuencias nos dicen QUÉ pesa. Pero como humanistas queremos saber DÓNDE.
+Si "paro" es importante, ¿en qué notas aparece? Volver a la fuente es el corazón
+del oficio.
+
+```{r}
+# Buscamos "paro" como palabra dentro de cada nota y listamos id + titular.
+# \\b marca límite de palabra: así "paro" no matchea dentro de "disparo".
+notas_con_paro <- notas |>
+  mutate(tiene_paro = str_detect(str_to_lower(paste(titular, texto)),
+                                 "\\bparo\\b")) |>
+  filter(tiene_paro) |>
+  select(id, fecha, titular)
+
+notas_con_paro
+```
+
+Fijate que ahora podemos ir a leer esas notas concretas. El análisis textual no
+nos saca de la fuente: nos lleva de vuelta a ella, pero con una brújula.
+
+## Contar notas por sección
+
+Otra pregunta de investigación: ¿en qué secciones del diario vivió este
+conflicto? ¿Fue solo "Gremiales" o se derramó a "Locales", "Política",
+"Economía"? El reparto por sección nos habla de cómo la prensa encuadró el tema.
+
+```{r}
+# Contamos cuántas notas hay por sección, de mayor a menor
+notas_por_seccion <- notas |>
+  count(seccion, sort = TRUE)
+
+notas_por_seccion
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(notas_por_seccion, aes(x = reorder(seccion, n), y = n)) +
+  geom_col(fill = "darkorange") +
+  coord_flip() +
+  labs(
+    title = "Notas por sección",
+    x = NULL,
+    y = "Cantidad de notas"
+  ) +
+  theme_minimal()
+```
+
+Si el conflicto se concentra en "Gremiales" pero también aparece en otras
+secciones, eso cuenta una historia: el tema desbordó la página sindical y se
+volvió noticia general. Esa lectura la hacés vos; los números solo te la
+señalan.
+
+## Para jugar
+
+Probá pedirle estas variaciones a la IA y mirá qué cambia:
+
+1. "En vez de 'paro', buscá la palabra 'acuerdo' y mostrame en qué notas
+   aparece. ¿Aparece más al principio o al final del conflicto? Ordená por
+   fecha." (Pista: el relato debería mostrar el acuerdo hacia el final.)
+
+2. "Sumá tres palabras vacías más a la lista —por ejemplo 'sus', 'fue', 'ha'— y
+   volvé a calcular el top 15. ¿Cambió mucho el ranking? ¿Por qué te parece que
+   sí o que no?"

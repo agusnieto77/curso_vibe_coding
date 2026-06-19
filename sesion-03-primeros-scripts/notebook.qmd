@@ -1,0 +1,136 @@
+---
+title: "Sesión 3 — Tu primer script: contar palabras de una fuente"
+lang: es
+format: html
+---
+
+## Por qué empezamos contando palabras
+
+Antes de hablar de código, hablemos de investigación. Cuando trabajamos con prensa, con archivos, con expedientes, una de las primeras preguntas que nos hacemos es bien simple: **¿qué tan larga es esta fuente? ¿qué tan rica es su vocabulario?** Una nota de cien palabras que repite tres términos no es lo mismo que una de cien palabras que usa noventa distintas. Esa diferencia —entre el total de palabras y las palabras *únicas*— es una primera medida de la densidad léxica de un texto, y los humanistas digitales la usamos para comparar fuentes, detectar redacciones formulaicas o rastrear cómo cambia el lenguaje de un diario a lo largo del tiempo.
+
+Hoy vamos a escribir nuestro **primer script de verdad**. No te asustes con la palabra "script": es simplemente una receta que la computadora ejecuta paso a paso. Y vas a ver que tiene siempre la misma forma: **entrada → proceso → salida**. Entra un archivo de texto, lo procesamos, y sale un número. Nada más.
+
+La fuente que vamos a usar es `../datos/textos/nota_ejemplo.txt`, una nota de prensa (sintética, ficticia, inspirada en la conflictividad obrera portuaria) sobre la tensión en las plantas pesqueras. Es parte del corpus que armamos para el curso.
+
+Una aclaración que voy a repetir hasta el cansancio: **la IA nos da el código, pero la cabeza la ponemos nosotros.** Vamos a leer cada línea, entender qué hace, y validar el resultado a mano. La IA se equivoca; el rigor lo ponés vos.
+
+## El prompt
+
+Esto es lo que le pediríamos a la IA, en lenguaje natural, sin saber una línea de programación:
+
+> "Escribime un script en R que abra el archivo de texto `../datos/textos/nota_ejemplo.txt`, cuente cuántas palabras tiene en total y cuántas palabras distintas (únicas). Que muestre los dos números con un texto claro. Comentá cada paso en español para que entienda qué hace."
+
+Fijate que el pedido es concreto: digo qué archivo, qué quiero contar (total y únicas), y cómo quiero la salida. Un buen prompt es como una buena consigna de trabajo práctico: cuanto más clara, mejor el resultado.
+
+## El código que la IA nos devolvió
+
+```{r}
+#| message: false
+#| warning: false
+
+# Cargamos stringr, una herramienta del tidyverse para trabajar con texto
+library(stringr)
+
+# --- ENTRADA: leemos la fuente ---
+# readLines abre el archivo y trae cada renglón como un elemento.
+# paste() junta todos esos renglones en un solo bloque de texto.
+ruta <- "../datos/textos/nota_ejemplo.txt"
+texto <- paste(readLines(ruta, encoding = "UTF-8"), collapse = " ")
+
+# --- PROCESO: partimos el texto en palabras ---
+# Pasamos todo a minúsculas para que "El" y "el" cuenten como la misma palabra
+texto <- str_to_lower(texto)
+
+# str_extract_all parte el texto en "palabras": secuencias de letras.
+# El patrón [[:alpha:]]+ toma letras (incluidas las acentuadas) y descarta
+# números, comas, puntos y comillas.
+palabras <- str_extract_all(texto, "[[:alpha:]]+")[[1]]
+
+# --- SALIDA: contamos y mostramos ---
+total <- length(palabras)            # cuántas palabras hay en total
+unicas <- length(unique(palabras))   # cuántas palabras DISTINTAS hay
+
+cat("Palabras totales:", total, "\n")
+cat("Palabras únicas:", unicas, "\n")
+```
+
+## Qué hace y cómo lo validamos
+
+Leamos el script como se lee una fuente: por partes.
+
+- **Entrada.** `readLines()` abre el archivo y `paste()` pega todos los renglones en un solo texto largo. Si imprimís `texto`, vas a ver la nota completa en una sola línea.
+- **Proceso.** Primero bajamos todo a minúsculas (así "Trabajadores" y "trabajadores" no se cuentan como dos palabras distintas). Después `str_extract_all()` recorta el texto en palabras, dejando afuera la puntuación.
+- **Salida.** `length()` cuenta cuántos elementos hay en la lista de palabras. Y `unique()` se queda con una sola copia de cada palabra antes de contar: eso nos da las únicas.
+
+¿Y cómo sabemos que el número está bien? **Validando a mano.** La nota es corta: podés contar las palabras del primer párrafo vos mismo y ver si el orden de magnitud cierra. Si el script te dijera "5 palabras totales", sabrías que algo se rompió. Esa desconfianza sana es lo que separa a quien investiga de quien copia y pega.
+
+Para mirar de cerca, asomémonos a las primeras palabras que extrajo:
+
+```{r}
+# Mostramos las primeras 15 palabras detectadas para chequear que tengan sentido
+head(palabras, 15)
+```
+
+Si ahí ves cosas como `"crece"`, `"la"`, `"tensión"`, vas por buen camino: el script está leyendo la fuente de verdad.
+
+## Modificamos el script: contar UNA palabra concreta
+
+Acá viene lo importante de la sesión: **perder el miedo a tocar el código.** Ya tenemos las palabras separadas; ahora queremos saber cuántas veces aparece un término que nos interesa como investigadores. En una nota sobre conflicto laboral, palabras como "sindicato" o "paritarias" son señales. Contarlas es un primer gesto de análisis de discurso.
+
+Este sería el pedido a la IA:
+
+> "Modificá el script anterior para que, además, me diga cuántas veces aparece la palabra «sindicato» en la nota."
+
+Y el cambio es mínimo. Mirá:
+
+```{r}
+# Elegí acá la palabra que querés rastrear. ¡Cambiá este valor y volvé a correr!
+palabra_buscada <- "sindicato"
+
+# Contamos cuántas veces esa palabra aparece en la lista que ya teníamos.
+# sum() suma los TRUE (cada coincidencia vale 1) de la comparación.
+veces <- sum(palabras == palabra_buscada)
+
+cat("La palabra '", palabra_buscada, "' aparece ", veces, " vez/veces.\n", sep = "")
+```
+
+¿Ves la línea `palabra_buscada <- "sindicato"`? Eso es una **variable**: una cajita con un nombre donde guardamos un valor. El resto del código no sabe ni le importa qué palabra pusiste; trabaja con lo que haya en la caja. Por eso cambiar la palabra es tan fácil: tocás un solo lugar.
+
+**Validación a ojo:** abrí `nota_ejemplo.txt` y buscá "sindicato" con Ctrl+F. Contá las coincidencias. ¿Coincide con lo que dijo el script? Si sí, podés confiar. Si no, antes de creerle al programa, preguntate por qué: ¿escribiste bien la palabra? ¿hay mayúsculas que no convertimos? Esa pregunta vale más que el número.
+
+## Qué hacer ante un error
+
+Tarde o temprano algo va a fallar, y está perfecto. Un error no es un reto: es la computadora pidiéndote precisión. Probemos romperlo a propósito para perderle el miedo.
+
+Si escribís mal la ruta del archivo, R te va a frenar:
+
+```{r}
+#| error: true
+
+# A propósito ponemos una ruta que NO existe para ver el error
+texto_roto <- readLines("../datos/textos/archivo_que_no_existe.txt")
+```
+
+Ese mensaje en rojo no es una catástrofe. Dice, más o menos, "no encuentro el archivo". La traducción práctica es: revisá el nombre y la ruta. **Cuando algo falle, copiá el mensaje de error y pegáselo a la IA tal cual**, con un "me da este error, ¿qué significa y cómo lo arreglo?". Es la forma más rápida de aprender.
+
+Y si querés que el script no explote cuando el archivo no está, sino que avise con cortesía, se lo podés pedir a la IA. Una versión así:
+
+```{r}
+ruta <- "../datos/textos/nota_ejemplo.txt"
+
+# file.exists() devuelve TRUE si el archivo está, FALSE si no.
+if (file.exists(ruta)) {
+  texto <- paste(readLines(ruta, encoding = "UTF-8"), collapse = " ")
+  cat("Archivo leído. Caracteres:", nchar(texto), "\n")
+} else {
+  cat("No encontré el archivo en:", ruta, "\n")
+  cat("Revisá que el nombre y la carpeta sean correctos.\n")
+}
+```
+
+## Para jugar
+
+Ahora te toca a vos. Dos variaciones para pedirle a la IA (y después validar a mano):
+
+1. **Cambiá la palabra buscada.** Probá con `"paritarias"`, `"puerto"` o `"conflicto"`. Tocás un solo valor y volvés a correr. ¿Cuál aparece más? ¿Qué te dice eso sobre el foco de la nota?
+2. **Pedile a la IA que arme un mini ranking:** "modificá el script para que me muestre las 10 palabras más frecuentes de la nota, ignorando palabras vacías como «el», «la», «de»". Vas a ver que, recortando esas palabras sin contenido, las que quedan arriba (paro, trabajadores, plantas) dibujan el tema de la fuente.

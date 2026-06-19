@@ -1,0 +1,235 @@
+---
+title: "Taller final — tu proyecto, de principio a fin (R)"
+lang: es
+format: html
+---
+
+## Bienvenida al taller
+
+Llegamos al final del curso, y este notebook es distinto a todos los anteriores. Acá NO hay contenido nuevo ni un corpus que te demos resuelto: **el protagonista sos vos y tus datos**. Esto es un andamiaje, una plantilla con las etapas del trabajo y un montón de huecos marcados con `TODO` para que los completes con TU investigación.
+
+Pensá esto como cuando armás un proyecto de verdad: tenés una pregunta que te quita el sueño, una fuente (un archivo, un padrón, un corpus de prensa, una serie de actas, lo que sea) y querés hacerla hablar a otra escala. El flujo es siempre el mismo: **pedir → ejecutar → limpiar → analizar → visualizar → validar**. Lo recorrimos sesión a sesión sobre un conflicto portuario sintético; ahora lo recorrés sobre lo tuyo.
+
+Una sola regla, la de siempre en este curso: **la IA es la herramienta, vos dirigís**. Ella te va a tirar código rapidísimo y, cada tanto, te va a mentir con total seguridad (alucina, inventa funciones, se equivoca de columna). El rigor lo ponés vos. Por eso cada etapa termina con una validación a mano.
+
+> Si todavía no tenés tus datos a mano, podés ensayar la plantilla con el corpus del curso en `../datos/notas_prensa.csv`. Pero el objetivo real es que la completes con una fuente tuya.
+
+---
+
+## 0. Preparación del entorno
+
+Antes de arrancar, cargamos las herramientas que venimos usando en el curso. Si alguna no está instalada, descomentá la línea de `install.packages` una sola vez.
+
+```{r}
+#| message: false
+#| warning: false
+
+# Si te falta algún paquete, corré esto UNA vez y volvé a comentarlo:
+# install.packages(c("tidyverse", "tidytext"))
+
+library(tidyverse)   # leer, limpiar y transformar datos (incluye dplyr, stringr, ggplot2)
+library(tidytext)    # análisis de texto, si tu fuente son palabras
+
+# Pista para vos: a partir de acá, todo el trabajo es sobre TUS datos.
+```
+
+---
+
+## 1. Mi pregunta de investigación
+
+Toda investigación empieza con una pregunta, no con un dato. Antes de tocar el teclado, escribí en palabras claras qué querés averiguar. Una buena pregunta es concreta, acotada y se puede responder mirando tu fuente.
+
+> **TODO — Escribí tu pregunta acá abajo, reemplazando este texto:**
+>
+> *Mi pregunta es: ...........................................................*
+>
+> *Por qué me importa (el problema humanístico de fondo): ....................*
+>
+> *Qué espero encontrar (mi hipótesis o corazonada): .........................*
+
+Ejemplo del curso, para que veas el tono (no lo copies, es solo de referencia): *"¿Cómo evoluciona la intensidad del conflicto portuario a lo largo de las semanas, según la frecuencia de palabras como 'paro' y 'acuerdo' en la prensa?"*
+
+---
+
+## 2. Mis datos: de dónde salen y qué forma tienen
+
+Antes de cargar nada, describí tu fuente. Esto no es burocracia: es el primer paso del método. Si no sabés qué tenés entre manos, ningún gráfico te va a salvar.
+
+> **TODO — Completá esta ficha de tus datos:**
+>
+> - **Qué son**: (¿prensa? ¿actas? ¿un padrón? ¿entrevistas transcritas?) ......
+> - **De dónde los saqué**: (archivo, repositorio, web, digitalización propia) .
+> - **Formato del archivo**: (`.csv`, `.txt`, `.xlsx`, varios `.txt` sueltos) ...
+> - **Cuántos registros / cuán grande es**: .....................................
+> - **Cómo lo voy a citar**: (autoría, año, dónde está) .........................
+> - **Advertencias**: (¿está incompleto? ¿hay sesgos en cómo se recogió?) ........
+
+Acordate: si tus datos son sintéticos o de prueba, **decilo siempre**, como hacemos con el corpus del curso.
+
+---
+
+## 3. Cargar mis datos
+
+Acá traemos el archivo a R. El código de abajo es un esqueleto: ajustá la **ruta** y el **lector** según tu formato. Dejé las variantes más comunes comentadas.
+
+```{r}
+#| message: false
+
+# TODO: poné la ruta a TU archivo. Si lo guardaste en la carpeta de datos del curso,
+# la ruta relativa sería algo como "../datos/mi_archivo.csv".
+
+# --- Si tus datos están en un CSV (lo más común) ---
+# datos <- read_csv("../datos/MI_ARCHIVO.csv")
+
+# --- Si es un Excel (necesitás el paquete readxl) ---
+# library(readxl)
+# datos <- read_excel("RUTA/A/MI_ARCHIVO.xlsx")
+
+# --- Si es un único texto plano ---
+# texto <- read_lines("RUTA/A/MI_ARCHIVO.txt")
+
+# Mientras no cambies nada, dejamos cargado el corpus del curso para que la plantilla corra.
+# BORRÁ esta línea cuando uses tus propios datos:
+datos <- read_csv("../datos/notas_prensa.csv")
+
+# Primer vistazo: nunca confíes a ciegas, MIRÁ lo que cargaste.
+glimpse(datos)
+```
+
+---
+
+## 4. Limpiar lo que haga falta
+
+Los datos reales vienen sucios: espacios de más, mayúsculas inconsistentes, restos de HTML, fechas con formato raro, columnas que sobran. Limpiar es parte del trabajo histórico, no un trámite previo. Adaptá estos pasos a la suciedad concreta de TU fuente.
+
+```{r}
+# TODO: limpiá según lo que tengan TUS datos. Algunos ejemplos típicos:
+
+datos_limpios <- datos |>
+  # 1) Sacar espacios sobrantes al principio y al final de los textos
+  mutate(across(where(is.character), str_squish))
+
+# Otros arreglos frecuentes (descomentá y adaptá los que necesites):
+# datos_limpios <- datos_limpios |>
+#   mutate(texto = str_remove_all(texto, "<[^>]+>")) |>   # restos de HTML
+#   mutate(texto = str_replace_all(texto, "&nbsp;", " ")) |>  # entidades HTML
+#   filter(!is.na(texto))                                   # filas vacías
+
+# Validá: ¿bajó o cambió algo? Compará el "antes" y el "después".
+nrow(datos)          # cuántas filas tenías
+nrow(datos_limpios)  # cuántas te quedaron
+glimpse(datos_limpios)
+```
+
+---
+
+## 5. Analizar
+
+Acá respondés tu pregunta. El análisis correcto depende de qué le preguntás a tu fuente: contar, agrupar, comparar, medir frecuencias. Abajo dejé dos andamios habituales; quedate con el que sirva a TU pregunta y borrá el otro.
+
+```{r}
+# --- ANDAMIO A: contar / agrupar por una columna (para datos en tabla) ---
+# TODO: cambiá "seccion" por la columna que querés resumir.
+
+resumen <- datos_limpios |>
+  count(seccion, sort = TRUE)   # ¿cuántos registros hay por cada categoría?
+
+resumen
+```
+
+```{r}
+#| message: false
+
+# --- ANDAMIO B: contar palabras (para fuentes textuales) ---
+# TODO: cambiá "texto" por tu columna de texto. Ajustá tus propias "stopwords".
+
+# Palabras vacías que no aportan sentido. AGREGÁ las que sobren en tu corpus.
+vacias <- c("de", "la", "el", "que", "en", "y", "a", "los", "las", "un", "una",
+            "del", "por", "con", "para", "se", "su", "al", "lo", "como", "más")
+
+palabras <- datos_limpios |>
+  unnest_tokens(palabra, texto) |>          # una palabra por fila
+  filter(!palabra %in% vacias) |>           # saco las vacías
+  count(palabra, sort = TRUE)               # las cuento
+
+# Las 15 palabras más frecuentes: ¿asoma el relato de tu fuente en los números?
+head(palabras, 15)
+```
+
+---
+
+## 6. Visualizar
+
+Un gráfico no es decoración: es un argumento. Tiene que dejar ver de un vistazo eso que descubriste en el análisis. Adaptá el código a TU resultado (cambiá los datos de origen, los ejes y, sobre todo, el título y las etiquetas, que son las que comunican).
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4.5
+
+# TODO: cambiá "palabras" por tu tabla de resultados y ajustá las columnas.
+
+palabras |>
+  slice_max(n, n = 10) |>                       # me quedo con las 10 más frecuentes
+  mutate(palabra = fct_reorder(palabra, n)) |>  # ordeno para que el gráfico se lea bien
+  ggplot(aes(x = n, y = palabra)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "TODO: poné un título que diga qué se ve",
+    subtitle = "TODO: aclará tu fuente y el período",
+    x = "Frecuencia",
+    y = NULL,
+    caption = "Fuente: TODO — citá tus datos"
+  ) +
+  theme_minimal()
+```
+
+---
+
+## 7. Validar (el paso que separa la investigación del verso)
+
+La IA escribió buena parte de este código y vos lo adaptaste. Nada de eso es verdad hasta que lo chequeás a mano. Validar es volver a la fuente y confirmar que los números dicen lo que parecen decir.
+
+> **TODO — Hacé al menos DOS de estas validaciones y anotá lo que viste:**
+>
+> 1. **Contá a mano**: tomá una categoría o palabra y verificá manualmente que el número coincida con lo que hay en tu fuente. ¿Da igual? ..............
+> 2. **Buscá el caso extremo**: el valor más alto y el más bajo, ¿tienen sentido o hay un error de carga/limpieza detrás? ..............................
+> 3. **Probá un cambio chico**: si modificás una stopword o una categoría, ¿el resultado se mueve como esperás? .................................
+
+```{r}
+# Ejemplo de validación cruzada: filtrá manualmente y contá vos mismo/a.
+# TODO: adaptalo a TU fuente y compará el número con tu tabla de arriba.
+
+datos_limpios |>
+  filter(str_detect(texto, "paro")) |>   # cambiá "paro" por tu término
+  nrow()                                  # ¿este número coincide con lo que esperabas?
+```
+
+---
+
+## 8. Conclusiones
+
+Volvé a tu pregunta de la sección 1 y respondela con lo que encontraste. Sé honesto/a: incluí también lo que NO pudiste responder y los límites de tus datos. Eso no es debilidad, es rigor.
+
+> **TODO — Escribí tus conclusiones:**
+>
+> - **Qué respondí**: ........................................................
+> - **Qué muestra la evidencia**: ...........................................
+> - **Qué quedó afuera / qué no pude saber**: ...............................
+> - **Próximo paso si siguiera esta investigación**: ........................
+
+---
+
+## Checklist de cierre
+
+Antes de dar por terminado el proyecto, repasá esta lista. Si podés tildar todo, tu trabajo es **reproducible y defendible**.
+
+- [ ] **Mi pregunta está escrita** y es concreta (sección 1).
+- [ ] **Mis datos están descritos y citados**: de dónde salen, qué formato, cómo se citan (sección 2). Si son sintéticos o de prueba, lo aclaré.
+- [ ] **El código está comentado en español** y se entiende qué hace cada paso.
+- [ ] **Las rutas a los archivos son relativas** (no `C:/Users/...`), así corre en otra máquina.
+- [ ] **Validé los resultados a mano**, no me los creí porque sí (sección 7).
+- [ ] **El notebook corre de arriba a abajo sin errores** desde cero.
+- [ ] **Mis conclusiones responden la pregunta** y reconocen los límites (sección 8).
+- [ ] **Guardé el proyecto** para poder retomarlo más adelante.
+
+Esto es tuyo, de principio a fin. Llevátelo y seguí investigando.

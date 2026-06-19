@@ -1,0 +1,175 @@
+---
+title: "Sesión 6 — Visualización de datos con IA (R)"
+lang: es
+format: html
+---
+
+## De los conteos a la imagen
+
+En la sesión anterior contamos palabras y miramos patrones. Eso ya es mucho, pero un conteo en una tabla rara vez convence a nadie. Cuando vos estudiás un conflicto —en este caso, un conflicto portuario de plantas pesqueras narrado por la prensa— necesitás MOSTRAR lo que encontraste: que el paro tuvo un pico, que ciertas palabras dominan el relato, que el tiempo tiene una forma.
+
+Una aclaración antes de arrancar: el corpus `../datos/notas_prensa.csv` es SINTÉTICO, ficticio, inspirado en la prensa y la conflictividad obrera del Río de la Plata. Sirve para aprender el método sin pisar callos de nadie. El método, eso sí, es el mismo que vas a usar con tus fuentes reales.
+
+Una idea que quiero que te lleves de esta sesión, por encima de cualquier línea de código: **un gráfico es un argumento, no un adorno**. Cada vez que elegís barras, una línea o una nube de palabras, estás eligiendo QUÉ querés que se vea. Esa decisión es tuya, de quien investiga. La IA dibuja; vos decidís qué se muestra y, sobre todo, validás que lo que se muestra sea cierto.
+
+Vamos a hacer tres gráficos sobre el mismo corpus:
+
+1. **Barras** con el top 10 de palabras más frecuentes (comparar magnitudes).
+2. **Serie temporal** con la cantidad de notas por semana (ver evolución en el tiempo).
+3. **Nube de palabras** para una mirada panorámica del vocabulario.
+
+Cada uno responde una pregunta distinta. Ahí está la clave: primero la pregunta, después el gráfico.
+
+## Preparar el terreno
+
+> **El prompt:**
+> "En R, cargá el archivo `../datos/notas_prensa.csv` con readr. Mostrame las primeras filas para confirmar que tiene las columnas id, fecha, diario, seccion, titular y texto."
+
+```{r}
+#| message: false
+#| warning: false
+
+# tidyverse trae readr (leer csv), dplyr (manipular), ggplot2 (graficar)
+library(tidyverse)
+# tidytext convierte texto en una tabla de palabras (una palabra por fila)
+library(tidytext)
+
+# Leemos el corpus. show_col_types = FALSE para que no nos llene de mensajes.
+notas <- read_csv("../datos/notas_prensa.csv", show_col_types = FALSE)
+
+# Miramos qué tenemos entre manos antes de hacer nada
+head(notas)
+```
+
+**Qué hace y cómo lo validamos:** leímos el CSV a una tabla llamada `notas`. Antes de graficar, MIRÁ los datos. ¿Aparecen las seis columnas? ¿La fecha tiene pinta de fecha (AAAA-MM-DD)? Si algo no cuadra acá, todo lo que viene después va a estar mal. La validación empieza por mirar la fuente, no por confiar en la salida.
+
+## Gráfico 1 — Barras: el top 10 de palabras
+
+La pregunta humanística: **¿qué vocabulario domina el relato del conflicto?** Si las palabras más frecuentes son "paro", "huelga", "asamblea", la prensa está contando una cosa; si fueran "acuerdo", "diálogo", "negociación", contaría otra. El gráfico de barras sirve cuando querés COMPARAR magnitudes entre categorías: acá, cuántas veces aparece cada palabra.
+
+> **El prompt:**
+> "Sobre la columna `texto`, tokenizá en palabras, sacá las palabras vacías en español (stopwords), contá las 10 más frecuentes y hacé un gráfico de barras horizontales ordenadas de mayor a menor con ggplot2."
+
+```{r}
+#| message: false
+#| warning: false
+
+# Lista corta de palabras vacías (artículos, preposiciones, conectores).
+# La armamos a mano para no depender de paquetes extra de stopwords.
+vacias <- c("el","la","los","las","un","una","unos","unas","de","del","a","ante",
+            "con","por","para","en","y","o","u","que","se","su","sus","al","lo",
+            "le","les","es","son","fue","ser","más","mas","no","sin","entre","sobre",
+            "este","esta","estos","estas","como","ya","si","tras","hay","una")
+
+frecuencias <- notas |>
+  # Tokenizamos: cada palabra del texto pasa a ser una fila
+  unnest_tokens(palabra, texto) |>
+  # Filtramos las vacías y descartamos números sueltos
+  filter(!palabra %in% vacias, str_detect(palabra, "[a-záéíóúñ]")) |>
+  # Contamos y ordenamos de mayor a menor
+  count(palabra, sort = TRUE) |>
+  # Nos quedamos con las 10 de arriba
+  slice_max(n, n = 10)
+
+frecuencias
+```
+
+```{r}
+#| fig-width: 7
+#| fig-height: 5
+
+ggplot(frecuencias, aes(x = n, y = reorder(palabra, n))) +
+  geom_col(fill = "#2c6e91") +
+  labs(
+    title = "Las 10 palabras más frecuentes en la cobertura del conflicto",
+    subtitle = "Corpus sintético de prensa — conflicto portuario pesquero",
+    x = "Frecuencia (cantidad de apariciones)",
+    y = NULL,
+    caption = "Fuente: corpus de ejemplo del curso"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+**Qué hace y cómo lo validamos:** tokenizamos el texto, sacamos las palabras vacías, contamos y graficamos las 10 que más aparecen. Las barras son horizontales y están ORDENADAS a propósito: el ojo compara largos mucho mejor cuando están alineados y rankeados. Para validar, mirá la tabla `frecuencias` ANTES del gráfico: ¿el orden de las barras coincide con los números de la tabla? ¿Aparecen palabras que esperabas para un conflicto portuario (paro, huelga, sindicato, trabajadores)? Si se colara una palabra vacía, la agregás a la lista `vacias`. El criterio de qué es "ruido" lo ponés vos.
+
+## Gráfico 2 — Serie temporal: notas por semana
+
+La pregunta humanística: **¿cómo se distribuyó la cobertura en el tiempo?** Un conflicto tiene ritmo: tensión, asamblea, estallido del paro, negociación, acuerdo. Si la prensa publicó más notas en ciertas semanas, eso marca los momentos calientes. La serie temporal sirve cuando el dato tiene un eje de tiempo y querés ver su EVOLUCIÓN.
+
+> **El prompt:**
+> "Convertí la columna `fecha` a tipo fecha, agrupá las notas por semana y hacé una serie temporal (línea con puntos) que muestre cuántas notas se publicaron en cada semana."
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+
+por_semana <- notas |>
+  # Nos aseguramos de que fecha sea un objeto Date de verdad
+  mutate(fecha = as.Date(fecha)) |>
+  # floor_date lleva cada fecha al lunes de su semana: así agrupamos por semana
+  mutate(semana = floor_date(fecha, unit = "week", week_start = 1)) |>
+  count(semana, name = "notas")
+
+por_semana
+```
+
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+
+ggplot(por_semana, aes(x = semana, y = notas)) +
+  geom_line(color = "#2c6e91", linewidth = 1) +
+  geom_point(color = "#2c6e91", size = 2.5) +
+  labs(
+    title = "Cantidad de notas publicadas por semana",
+    subtitle = "El pico marca las semanas más calientes del conflicto",
+    x = "Semana (lunes de cada semana)",
+    y = "Notas publicadas",
+    caption = "Fuente: corpus de ejemplo del curso"
+  ) +
+  theme_minimal(base_size = 12)
+```
+
+**Qué hace y cómo lo validamos:** convertimos la fecha, agrupamos por semana y dibujamos una línea con puntos. La línea sugiere continuidad en el tiempo; los puntos marcan cada observación real (que no haya magia entre semanas). Validación a mano: sumá la columna `notas` de la tabla `por_semana` y tiene que dar el total de filas del CSV (22 notas). Si una semana tiene un pico, andá al CSV y fijate qué pasó esos días: vas a encontrar el paro y la asamblea multitudinaria. El gráfico te lleva a la fuente; nunca la reemplaza.
+
+## Gráfico 3 — Nube de palabras
+
+La pregunta humanística: **¿qué impresión general da el vocabulario del corpus de un solo vistazo?** La nube de palabras NO es para medir con precisión —para eso ya tenemos las barras—, es para una mirada panorámica, exploratoria. Es seductora y por eso mismo hay que usarla con cuidado: el tamaño impresiona, pero engaña si uno quiere comparar dos palabras parecidas. Sirve para abrir preguntas, no para cerrarlas.
+
+> **El prompt:**
+> "Con ggwordcloud, hacé una nube de palabras a partir de las frecuencias del corpus (sacando las palabras vacías), mostrando las 50 palabras más frecuentes con el tamaño según su frecuencia."
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-width: 7
+#| fig-height: 5
+
+# ggwordcloud dibuja nubes de palabras con la lógica de ggplot2.
+# Si no lo tenés instalado: install.packages("ggwordcloud")
+library(ggwordcloud)
+
+nube <- notas |>
+  unnest_tokens(palabra, texto) |>
+  filter(!palabra %in% vacias, str_detect(palabra, "[a-záéíóúñ]")) |>
+  count(palabra, sort = TRUE) |>
+  slice_max(n, n = 50)
+
+set.seed(42)  # fija el azar del acomodo para que la nube sea reproducible
+
+ggplot(nube, aes(label = palabra, size = n, color = n)) +
+  geom_text_wordcloud(area_corr = TRUE) +
+  scale_size_area(max_size = 18) +
+  scale_color_gradient(low = "#7fb3cc", high = "#1b475e") +
+  labs(title = "Nube de palabras del corpus") +
+  theme_minimal()
+```
+
+**Qué hace y cómo lo validamos:** reusamos el conteo de palabras (mismo criterio que en las barras) y lo mostramos como nube, con el tamaño proporcional a la frecuencia. Fijate que `set.seed(42)` hace que el acomodo sea siempre igual: sin eso, cada corrida te daría una nube distinta y no podrías reproducir tu figura. Validación: la palabra MÁS grande de la nube tiene que ser la primera de la tabla `frecuencias` del gráfico de barras. Si no coinciden, algo se rompió. La nube y las barras cuentan la misma historia desde dos ángulos.
+
+## Para jugar
+
+Probá pedirle a la IA estas variaciones y mirá qué cambia:
+
+- "Hacé el mismo gráfico de barras pero sobre los TITULARES en vez del texto completo. ¿Cambia el ranking? ¿Por qué un titular pesa distinto que el cuerpo de la nota?"
+- "En la serie temporal, sumá una línea por cada diario (`Diario del Puerto`, `La Voz Obrera`, `El Litoral del Sur`) para comparar quién cubrió más y cuándo." Después preguntate: ¿qué argumento sostiene ese gráfico que el anterior no podía?
