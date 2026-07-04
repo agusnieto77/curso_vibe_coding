@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 07: Buenas prácticas y validación &middot; Fundaci&oacute;n CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 07 &middot; 13 jul</div>
+    </header>
+
+<section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 13 jul 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">Buenas prácticas y <em>validación</em></h1>
+        <p class="cover-subtitle">Cómo revisar el código generado por IA, detectar errores frecuentes y documentar procesos con responsabilidad académica.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+<section class="slide" data-slide="02">
+        <span class="slide-number">02 / 05</span>
+        <div class="eyebrow">Riesgo</div>
+        <h2 class="slide-title">La IA también <em>se equivoca</em></h2>
+        <p class="slide-lead">Los modelos producen respuestas plausibles, no necesariamente correctas. En investigación, la plausibilidad no alcanza.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Errores de sintaxis: el código directamente no corre.</div></li>
+<li><span></span><div>Errores lógicos: corre pero hace otra cosa.</div></li>
+<li><span></span><div>Errores semánticos: interpreta mal el problema.</div></li>
+<li><span></span><div>Alucinaciones: inventa funciones, archivos, columnas o resultados.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="03">
+        <span class="slide-number">03 / 05</span>
+        <div class="eyebrow">Revisión</div>
+        <h2 class="slide-title">Leer código como parte del <em>método</em></h2>
+        <p class="slide-lead">No hace falta ser programador experto para revisar estructura, entradas, salidas y supuestos.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Identificar qué archivo lee y qué archivo escribe.</div></li>
+<li><span></span><div>Buscar operaciones destructivas sobre datos originales.</div></li>
+<li><span></span><div>Pedir explicación línea por línea.</div></li>
+<li><span></span><div>Ejecutar pruebas pequeñas con resultados esperados.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="04">
+        <span class="slide-number">04 / 05</span>
+        <div class="eyebrow">Alucinaciones</div>
+        <h2 class="slide-title">Cuando el modelo <em>inventa</em></h2>
+        <p class="slide-lead">Una respuesta segura puede ser falsa. La validación consiste en desconfiar productivamente.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Funciones que no existen o librerías mal citadas.</div></li>
+<li><span></span><div>Columnas asumidas que no están en la tabla.</div></li>
+<li><span></span><div>Rutas de archivo inventadas.</div></li>
+<li><span></span><div>Conclusiones estadísticas sin cálculo verificable.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="05">
+        <span class="slide-number">05 / 05</span>
+        <div class="eyebrow">Trazabilidad</div>
+        <h2 class="slide-title">El código también es <em>evidencia</em></h2>
+        <p class="slide-lead">En investigación académica, el proceso importa. Documentar prompts, versiones y decisiones permite reproducir y discutir resultados.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Guardar prompts relevantes junto al script.</div></li>
+<li><span></span><div>Registrar versiones del corpus antes y después de limpiar.</div></li>
+<li><span></span><div>Comentar decisiones metodológicas dentro del código.</div></li>
+<li><span></span><div>Separar resultados exploratorios de resultados presentables.</div></li>
+        </ul>
+    </section>
+
+<nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 05</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 20.0%"></div></div></div>
+    </nav>
+    <script src="js/bg-code.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
