@@ -53,6 +53,11 @@ jobs:
       - name: Renderizar el sitio
         run: quarto render
 
+      - name: Incluir sitio de Presentaciones en el artefacto final
+        run: |
+          mkdir -p _site/OpenCode
+          cp -R OpenCode/Presentaciones _site/OpenCode/Presentaciones
+
       - name: Subir artefacto del sitio
         uses: actions/upload-pages-artifact@v3
         with:
