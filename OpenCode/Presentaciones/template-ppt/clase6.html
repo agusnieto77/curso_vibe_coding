@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 06: Visualización de datos con ayuda de IA &middot; Fundaci&oacute;n CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 06 &middot; 08 jul</div>
+    </header>
+
+<section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 08 jul 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">Visualización de datos con <em>ayuda de IA</em></h1>
+        <p class="cover-subtitle">Gráficos sencillos a partir de tablas y corpus procesados: barras, series temporales, nubes de palabras y exploración visual.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+<section class="slide" data-slide="02">
+        <span class="slide-number">02 / 05</span>
+        <div class="eyebrow">Elección</div>
+        <h2 class="slide-title">Mostrar datos es tomar una <em>decisión</em></h2>
+        <p class="slide-lead">Una visualización no es decoración. Ordena la lectura, destaca relaciones y también puede ocultar problemas.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>El gráfico debe responder una pregunta concreta.</div></li>
+<li><span></span><div>No todo dato necesita visualización.</div></li>
+<li><span></span><div>La escala, el orden y el color son decisiones interpretativas.</div></li>
+<li><span></span><div>La claridad vale más que el efecto visual.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="03">
+        <span class="slide-number">03 / 05</span>
+        <div class="eyebrow">Tipos</div>
+        <h2 class="slide-title">Elegir el gráfico según la <em>pregunta</em></h2>
+        <p class="slide-lead">La IA puede sugerir gráficos, pero conviene saber cuándo cada tipo tiene sentido.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Barras: comparar categorías.</div></li>
+<li><span></span><div>Series temporales: observar cambios en el tiempo.</div></li>
+<li><span></span><div>Nubes de palabras: exploración inicial, no prueba concluyente.</div></li>
+<li><span></span><div>Dispersión: explorar relaciones entre variables.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="04">
+        <span class="slide-number">04 / 05</span>
+        <div class="eyebrow">Prompt</div>
+        <h2 class="slide-title">Cómo pedir un gráfico <em>útil</em></h2>
+        <p class="slide-lead">Un buen pedido de visualización incluye datos, objetivo, variable principal, formato y criterio estético.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Indicar columnas disponibles y significado de cada una.</div></li>
+<li><span></span><div>Explicar qué comparación se quiere observar.</div></li>
+<li><span></span><div>Pedir etiquetas legibles y título interpretativo.</div></li>
+<li><span></span><div>Solicitar exportación en PNG/SVG y versión editable.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="05">
+        <span class="slide-number">05 / 05</span>
+        <div class="eyebrow">Interpretación</div>
+        <h2 class="slide-title">Del gráfico bonito al <em>gráfico correcto</em></h2>
+        <p class="slide-lead">La IA puede producir una visualización visualmente atractiva pero metodológicamente pobre. Hay que revisar proporciones, escalas y etiquetas.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Verificar que no falten valores.</div></li>
+<li><span></span><div>Revisar que el eje no distorsione la comparación.</div></li>
+<li><span></span><div>Evitar colores que sugieran jerarquías falsas.</div></li>
+<li><span></span><div>Acompañar el gráfico con una lectura breve.</div></li>
+        </ul>
+    </section>
+
+<nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 05</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 20.0%"></div></div></div>
+    </nav>
+    <script src="js/bg-code.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 05: IA y análisis textual &middot; Fundaci&oacute;n CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 05 &middot; 06 jul</div>
+    </header>
+
+<section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 06 jul 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">IA y <em>análisis textual</em></h1>
+        <p class="cover-subtitle">Conteos, búsquedas, normalización, tokenización básica, detección de patrones y preparación de datos textuales.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+<section class="slide" data-slide="02">
+        <span class="slide-number">02 / 05</span>
+        <div class="eyebrow">ABC</div>
+        <h2 class="slide-title">Contar, buscar, <em>normalizar</em></h2>
+        <p class="slide-lead">Antes de cualquier técnica sofisticada, el análisis textual exige operaciones simples y bien controladas.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Conteo de palabras o expresiones por documento.</div></li>
+<li><span></span><div>Búsqueda de términos, variantes y coocurrencias.</div></li>
+<li><span></span><div>Normalización de mayúsculas, acentos y puntuación.</div></li>
+<li><span></span><div>Exportación de resultados para revisar fuera del script.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="03">
+        <span class="slide-number">03 / 05</span>
+        <div class="eyebrow">Tokenización</div>
+        <h2 class="slide-title">Dividir el texto en <em>unidades</em></h2>
+        <p class="slide-lead">Tokenizar es convertir una secuencia textual en unidades analizables: palabras, frases, párrafos o documentos.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>La unidad de análisis depende de la pregunta.</div></li>
+<li><span></span><div>No todo corpus necesita el mismo tratamiento.</div></li>
+<li><span></span><div>Las stopwords pueden ser ruido o evidencia, según el caso.</div></li>
+<li><span></span><div>Las decisiones de limpieza son decisiones metodológicas.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="04">
+        <span class="slide-number">04 / 05</span>
+        <div class="eyebrow">Patrones</div>
+        <h2 class="slide-title">Detectar formas de <em>recurrencia</em></h2>
+        <p class="slide-lead">La IA puede generar scripts para buscar patrones, pero la interpretación sigue dependiendo del conocimiento del corpus.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Patrones léxicos: palabras o expresiones repetidas.</div></li>
+<li><span></span><div>Patrones formales: fechas, nombres, lugares, hashtags.</div></li>
+<li><span></span><div>Patrones contextuales: palabras cercanas o combinaciones frecuentes.</div></li>
+<li><span></span><div>Verificación manual sobre muestras pequeñas.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="05">
+        <span class="slide-number">05 / 05</span>
+        <div class="eyebrow">Crítica</div>
+        <h2 class="slide-title">El resultado no se acepta <em>sin revisión</em></h2>
+        <p class="slide-lead">Todo análisis textual automático debe auditarse. La IA facilita el procesamiento, pero también puede introducir supuestos invisibles.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Revisar muestras al azar.</div></li>
+<li><span></span><div>Comparar resultados antes y después de limpiar.</div></li>
+<li><span></span><div>Guardar el corpus original y el corpus transformado.</div></li>
+<li><span></span><div>Documentar cada decisión de normalización.</div></li>
+        </ul>
+    </section>
+
+<nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 05</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 20.0%"></div></div></div>
+    </nav>
+    <script src="js/bg-code.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

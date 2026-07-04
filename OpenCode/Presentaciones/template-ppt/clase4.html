@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 04: Automatización de tareas sobre corpus &middot; Fundaci&oacute;n CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 04 &middot; 01 jul</div>
+    </header>
+
+<section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 01 jul 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">Automatización de tareas sobre <em>corpus</em></h1>
+        <p class="cover-subtitle">Rutinas para limpiar textos, extraer fragmentos, renombrar archivos, convertir formatos y ordenar colecciones documentales.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+<section class="slide" data-slide="02">
+        <span class="slide-number">02 / 05</span>
+        <div class="eyebrow">Problema</div>
+        <h2 class="slide-title">La investigación tiene mucho <em>trabajo repetitivo</em></h2>
+        <p class="slide-lead">Renombrar archivos, limpiar encabezados, separar fragmentos y convertir formatos consume tiempo intelectual que podría usarse en interpretar.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Colecciones con nombres inconsistentes.</div></li>
+<li><span></span><div>Textos con marcas, encabezados o caracteres problemáticos.</div></li>
+<li><span></span><div>Archivos repartidos en carpetas sin criterio estable.</div></li>
+<li><span></span><div>Datos que deben reorganizarse antes de poder analizarlos.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="03">
+        <span class="slide-number">03 / 05</span>
+        <div class="eyebrow">Flujo</div>
+        <h2 class="slide-title">Input, transformación, <em>output</em></h2>
+        <p class="slide-lead">Automatizar es diseñar un flujo repetible. La clave no está solo en el script, sino en la claridad de los pasos.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Input: corpus original sin modificar.</div></li>
+<li><span></span><div>Transformación: reglas explícitas y documentadas.</div></li>
+<li><span></span><div>Output: archivos nuevos, nunca pérdida del original.</div></li>
+<li><span></span><div>Registro: qué se hizo, cuándo y con qué script.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="04">
+        <span class="slide-number">04 / 05</span>
+        <div class="eyebrow">Ejemplos</div>
+        <h2 class="slide-title">Operaciones frecuentes sobre <em>documentos</em></h2>
+        <p class="slide-lead">La IA puede ayudar a generar pequeñas rutinas que resuelvan tareas comunes de archivo y corpus.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Renombrar archivos según fecha, autor o fuente.</div></li>
+<li><span></span><div>Convertir múltiples .docx o .pdf a .txt cuando sea posible.</div></li>
+<li><span></span><div>Extraer líneas que contienen una palabra o patrón.</div></li>
+<li><span></span><div>Eliminar duplicados, espacios excesivos o caracteres invisibles.</div></li>
+        </ul>
+    </section>
+
+<section class="slide" data-slide="05">
+        <span class="slide-number">05 / 05</span>
+        <div class="eyebrow">Pipeline</div>
+        <h2 class="slide-title">Pensar en rutinas <em>reutilizables</em></h2>
+        <p class="slide-lead">Un buen script no resuelve solo el caso de hoy: deja una herramienta que puede adaptarse al próximo corpus.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Separar parámetros modificables del resto del código.</div></li>
+<li><span></span><div>Comentar las decisiones de limpieza.</div></li>
+<li><span></span><div>Probar con pocos archivos antes de correr sobre todo el corpus.</div></li>
+<li><span></span><div>Guardar resultados intermedios para auditar el proceso.</div></li>
+        </ul>
+    </section>
+
+<nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 05</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 20.0%"></div></div></div>
+    </nav>
+    <script src="js/bg-code.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
