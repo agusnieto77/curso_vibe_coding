@@ -16,6 +16,10 @@ __pycache__/
 **/*.html
 /.quarto/
 
+# Excepción: sitio estático del curso en GitHub Pages
+!OpenCode/Presentaciones/index.html
+!OpenCode/Presentaciones/template-ppt/*.html
+
 # Sistema
 .DS_Store
 Thumbs.db
