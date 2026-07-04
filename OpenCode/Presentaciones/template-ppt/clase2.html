@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 02: Cómo pedir código en lenguaje natural &middot; Fundación CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 02 &middot; 24 jun</div>
+    </header>
+
+    <section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 24 jun 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">Cómo pedir código en <em>lenguaje natural</em></h1>
+        <p class="cover-subtitle">Principios básicos de prompting para programación: describir tareas, datos, objetivos, restricciones y criterios de validación.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="02">
+        <span class="slide-number">02 / 10</span>
+        <div class="eyebrow">Principio</div>
+        <h2 class="slide-title">Un buen prompt es una <em>especificación</em></h2>
+        <p class="slide-lead">Pedir código no es escribir una frase suelta. Es describir una tarea con suficiente contexto para que el modelo pueda producir algo útil y revisable.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Contexto: qué problema de investigación se quiere resolver.</div></li>
+            <li><span></span><div>Datos: qué formato tienen los archivos o tablas.</div></li>
+            <li><span></span><div>Objetivo: qué salida se espera obtener.</div></li>
+            <li><span></span><div>Restricciones: lenguaje, librerías, legibilidad, comentarios, formato final.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="03">
+        <span class="slide-number">03 / 10</span>
+        <div class="eyebrow">Anatomía</div>
+        <h2 class="slide-title">Del pedido ambiguo al <em>pedido operativo</em></h2>
+        <p class="slide-lead">La diferencia entre un resultado mediocre y uno útil suele estar en la precisión del encargo.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Malo: 'haceme un código para analizar textos'.</div></li>
+            <li><span></span><div>Mejor: 'tengo 120 archivos .txt; quiero contar palabras por documento, excluir stopwords y exportar un CSV'.</div></li>
+            <li><span></span><div>Excelente: agregar ejemplo de archivo, salida esperada y criterios de verificación.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="04">
+        <span class="slide-number">04 / 10</span>
+        <div class="eyebrow">Iteración</div>
+        <h2 class="slide-title">La conversación es parte del <em>método</em></h2>
+        <p class="slide-lead">La primera respuesta rara vez es la definitiva. La calidad aparece al corregir, pedir explicaciones y ajustar el resultado.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Pedí que explique cada bloque antes de ejecutarlo.</div></li>
+            <li><span></span><div>Si aparece un error, pegá el mensaje completo y describí qué esperabas.</div></li>
+            <li><span></span><div>Pedí alternativas más simples antes de aceptar soluciones complejas.</div></li>
+            <li><span></span><div>Solicitá tests o verificaciones pequeñas para confirmar que el script funciona.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="05">
+        <span class="slide-number">05 / 10</span>
+        <div class="eyebrow">Método</div>
+        <h2 class="slide-title">SDD: del prompt suelto a la <em>especificación</em></h2>
+        <p class="slide-lead"><strong>Spec-Driven Development</strong> cambia la pregunta. En vez de saltar del prompt al código, se hace explícito el contrato de trabajo: intención, requisitos verificables, diseño, tareas y criterios de éxito. El código se produce contra una especificación, no contra una ocurrencia.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Intención</strong> — qué problema se quiere resolver y por qué.</div></li>
+            <li><span></span><div><strong>Spec</strong> — qué condiciones debe cumplir la solución.</div></li>
+            <li><span></span><div><strong>Diseño</strong> — cómo se organiza la implementación.</div></li>
+            <li><span></span><div><strong>Tareas</strong> — pasos pequeños, atómicos, ejecutables.</div></li>
+            <li><span></span><div><strong>Verify</strong> — pruebas, diffs y revisión antes de cerrar.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="06">
+        <span class="slide-number">06 / 10</span>
+        <div class="eyebrow">Caso de trabajo</div>
+        <h2 class="slide-title">Gentle-AI: el <em>orquestador</em> sobre OpenCode</h2>
+        <p class="slide-lead">En este curso, <strong>OpenCode</strong> es la interfaz de trabajo y <strong>Gentle-AI</strong> agrega el carril metodológico. El agente base es <em>gentle-orchestrator</em>: recibe el objetivo, decide en qué fase está y delega en subagentes especializados.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Subagentes por fase:</strong> explore, propose, spec, design, tasks, apply, verify, archive.</div></li>
+            <li><span></span><div><strong>Modelos distintos según la tarea</strong> — uno potente para diseñar, uno rápido para explorar o aplicar.</div></li>
+            <li><span></span><div><strong>Comandos <code>/sdd-*</code></strong> que pasan por el orquestador y disparan la fase correspondiente.</div></li>
+            <li><span></span><div><strong>Artefactos vivos:</strong> propuestas, specs, diseños, tareas, tests y memoria persistente.</div></li>
+            <li><span></span><div><strong>El humano valida,</strong> sobre todo al especificar y al verificar. La IA no reemplaza: estructura la colaboración.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="07">
+        <span class="slide-number">07 / 10</span>
+        <div class="eyebrow">Capas</div>
+        <h2 class="slide-title">Skills, tools y memoria: <em>tres capas</em> que se complementan</h2>
+        <p class="slide-lead">SDD es el carril. Para que el agente haga algo útil, ese carril se apoya en tres capas: <strong>skills</strong> que empaquetan saber hacer, <strong>tools</strong> que ejecutan acciones y <strong>memoria</strong> que recuerda entre sesiones.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Skills</strong> — conocimiento operativo empaquetado: instrucciones, criterios, plantillas, scripts. Una skill no ejecuta: orienta sobre <em>cuándo</em> y <em>cómo</em> trabajar.</div></li>
+            <li><span></span><div><strong>Tools</strong> — funciones autorizadas para actuar: leer archivos, correr tests, usar git, llamar un servidor MCP. El host valida permisos antes de ejecutar.</div></li>
+            <li><span></span><div><strong>Memoria</strong> — capa externa que persiste hechos, decisiones y contexto. No es más prompt: es recuerdo recuperable.</div></li>
+            <li><span></span><div>El agente confiable <strong>no improvisa</strong>: sigue un carril, carga capacidades y usa herramientas con permiso.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="08">
+        <span class="slide-number">08 / 10</span>
+        <div class="eyebrow">Concepto</div>
+        <h2 class="slide-title">Memoria persistente: el <em>archivo</em> del agente</h2>
+        <p class="slide-lead">Un agente útil no solo conversa: <strong>recuerda</strong> entre sesiones. La memoria persistente guarda hechos, decisiones y contexto fuera del prompt. No es más contexto: es una capa externa, selectiva y recuperable.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Continuidad.</strong> Reanudar una tarea o un proyecto sin repetir el onboarding cada vez.</div></li>
+            <li><span></span><div><strong>Personalización.</strong> Recordar hechos sobre el usuario, el equipo o el corpus de trabajo.</div></li>
+            <li><span></span><div><strong>Menos coste, más contexto.</strong> Sustituir historial bruto por resúmenes, hechos y recuperaciones selectivas.</div></li>
+            <li><span></span><div><strong>Trazabilidad.</strong> Conservar decisiones, razones y cambios de estado de forma consultable.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="09">
+        <span class="slide-number">09 / 10</span>
+        <div class="eyebrow">Caso concreto</div>
+        <h2 class="slide-title">Engram: local-first, <em>texto curado</em></h2>
+        <p class="slide-lead">Engram es una implementación de referencia para agentes de coding: binario local en Go, <strong>SQLite + FTS5</strong>, con sesiones, observaciones, prompts y timeline cronológico. Su decisión de diseño es explícita: texto curado y búsqueda full-text local, no vector DB.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Lo que Engram resuelve bien.</strong> Continuidad de proyecto, decisiones técnicas, bugs, cambios, prompts anteriores y contexto de repositorio.</div></li>
+            <li><span></span><div><strong>Latencia muy baja</strong> porque todo vive en local, y <strong>coste de infraestructura mínimo</strong>: un binario y un archivo SQLite.</div></li>
+            <li><span></span><div><strong>Lo que Engram no intenta resolver.</strong> RAG semántico a escala, búsqueda híbrida o embeddings sobre corpus heterogéneos.</div></li>
+            <li><span></span><div>Para esos casos conviene combinarla con backends especializados (vector DB, índices serverless) o marcos modulares como LangChain y LlamaIndex.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="10">
+        <span class="slide-number">10 / 10</span>
+        <div class="eyebrow">Práctica</div>
+        <h2 class="slide-title">Un pedido real de <em>investigación</em></h2>
+        <p class="slide-lead">Un colega les encarga una herramienta de transcripción. Antes de pedirle nada al modelo, hay que leer el pedido completo: requisitos funcionales, restricciones de diseño, libertad explícita y criterio de validación.</p>
+        <div class="rule"></div>
+        <pre class="mono" style="margin: 0 0 var(--s-2); padding: var(--s-2) var(--s-3); border-left: 2px solid var(--accent); background: rgba(0,0,0,0.02); font-size: 0.78rem; line-height: 1.5; white-space: pre-wrap; color: var(--ink-700);">"Necesito que me desarrolles una herramienta informática para transcribir entrevistas, pensada exclusivamente para personas que no saben nada de tecnología. Quiero un diseño muy limpio y amigable, sin botones extraños. Las funciones que no pueden faltar son: 1) cargar audio desde mi computadora o pegar un enlace web; 2) un interruptor sencillo que diga algo como «Diferenciar quién habla cada cosa»; 3) un lugar para escribir palabras raras, nombres propios o términos de nuestra investigación; 4) poder hacer clic en «Voz 1» para cambiarlo por el nombre real. Tú tienes total libertad para decidir cómo construirlo por dentro. Dime qué pasos debo seguir para tenerlo listo y empezar a usarlo."</pre>
+        <ul class="editorial-list" style="margin-top: 0;">
+            <li><span></span><div><strong>Requisitos</strong> — carga de audio, diferenciar hablantes, glosario, renombrar <em>Voz 1</em> con un clic.</div></li>
+            <li><span></span><div><strong>Restricciones</strong> — interfaz limpia, comparable a un procesador de textos.</div></li>
+            <li><span></span><div><strong>Libertad delegada</strong> — el usuario concede total libertad de stack e implementación.</div></li>
+            <li><span></span><div><strong>Validación</strong> — un colega no técnico debe poder instalarlo y usarlo siguiendo pasos claros.</div></li>
+        </ul>
+    </section>
+
+    <nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 10</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 10.0%"></div></div></div>
+    </nav>
+
+    <script src="js/bg-code.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

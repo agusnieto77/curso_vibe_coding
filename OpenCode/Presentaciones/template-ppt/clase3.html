@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 03: Primeros scripts sin saber programar &middot; Fundación CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 03 &middot; 29 jun</div>
+    </header>
+
+    <section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 29 jun 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">Primeros scripts sin <em>saber programar</em></h1>
+        <p class="cover-subtitle">Leer, ejecutar y modificar código generado por IA sin convertir la clase en un curso tradicional de sintaxis.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+    <section class="slide" data-slide="02">
+        <span class="slide-number">02 / 10</span>
+        <div class="eyebrow">Base</div>
+        <h2 class="slide-title">Un script es una <em>secuencia</em></h2>
+        <p class="slide-lead">Un script ordena acciones: leer datos, transformarlos y producir una salida. Entender esa estructura alcanza para empezar a trabajar con IA de forma responsable.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Entrada: archivos, carpetas, tablas o texto.</div></li>
+            <li><span></span><div>Proceso: instrucciones que modifican, cuentan, filtran o clasifican.</div></li>
+            <li><span></span><div>Salida: CSV, gráfico, texto limpio o reporte.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="03">
+        <span class="slide-number">03 / 10</span>
+        <div class="eyebrow">Entornos</div>
+        <h2 class="slide-title">Dónde ejecutar sin <em>complicarse</em></h2>
+        <p class="slide-lead">La elección del entorno debe reducir fricción, no aumentarla. En este curso priorizamos <strong>OpenCode</strong> porque permite pedir, revisar, documentar y ejecutar scripts desde un mismo espacio de trabajo.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>OpenCode:</strong> opción principal. Podemos pedirle que escriba y documente un script, que lo ejecute en terminal o que nos dé el comando exacto para correrlo.</div></li>
+            <li><span></span><div><strong>VS Code:</strong> alternativa sólida cuando queremos un editor tradicional con extensiones y control manual.</div></li>
+            <li><span></span><div><strong>Google Colab / Jupyter:</strong> útiles para notebooks, exploración paso a paso y pruebas rápidas con datos.</div></li>
+            <li><span></span><div><strong>Positron:</strong> alternativa potente para análisis de datos y flujos cercanos a RStudio.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="04">
+        <span class="slide-number">04 / 10</span>
+        <div class="eyebrow">Vocabulario</div>
+        <h2 class="slide-title">Variables, archivos y <em>carpetas</em></h2>
+        <p class="slide-lead">No hace falta dominar toda la programación para entender lo mínimo necesario.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Una variable guarda un valor con nombre.</div></li>
+            <li><span></span><div>Una ruta indica dónde está un archivo.</div></li>
+            <li><span></span><div>Una función agrupa instrucciones reutilizables.</div></li>
+            <li><span></span><div>Un error es información: dice dónde falló el proceso.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="05">
+        <span class="slide-number">05 / 10</span>
+        <div class="eyebrow">Jerarquía</div>
+        <h2 class="slide-title">System prompt y prompt de usuario <em>no son lo mismo</em></h2>
+        <p class="slide-lead">Cuando usamos un agente, no todo lo que lo guía viene del mensaje que escribimos. Hay instrucciones de fondo —más estables y con mayor prioridad— que definen identidad, reglas, herramientas y procedimientos.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>System prompt:</strong> instrucciones de nivel superior. Define rol, límites, estilo, permisos y reglas de trabajo.</div></li>
+            <li><span></span><div><strong>Prompt de usuario:</strong> el pedido situado. Dice qué queremos hacer ahora, con qué datos y con qué objetivo.</div></li>
+            <li><span></span><div><strong>Módulos de sistema:</strong> archivos y definiciones que se cargan como partes del contexto del agente.</div></li>
+            <li><span></span><div><strong>Regla práctica:</strong> el usuario dirige la tarea; el sistema define el marco seguro para ejecutarla.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="06">
+        <span class="slide-number">06 / 10</span>
+        <div class="eyebrow">Roles</div>
+        <h2 class="slide-title">Agente y subagente <em>no son el mismo rol</em></h2>
+        <p class="slide-lead">Un agente puede sostener la conversación principal, interpretar el objetivo y decidir el rumbo. Un subagente es una unidad más acotada: recibe una misión concreta, trabaja con contexto limitado y devuelve un resultado.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Agente:</strong> coordina, conversa, prioriza, decide cuándo pedir aclaración y cuándo delegar.</div></li>
+            <li><span></span><div><strong>Subagente:</strong> ejecuta una fase o tarea específica: explorar, diseñar, aplicar cambios, verificar.</div></li>
+            <li><span></span><div><strong>Menos contexto, más foco:</strong> el subagente no necesita saber todo; necesita saber lo justo para su encargo.</div></li>
+            <li><span></span><div><strong>Resultado:</strong> el subagente devuelve hallazgos, cambios o verificación; el agente integra y decide el siguiente paso.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="07">
+        <span class="slide-number">07 / 10</span>
+        <div class="eyebrow">Quién</div>
+        <h2 class="slide-title"><code>AGENTS.md</code>: quién es el <em>agente</em></h2>
+        <p class="slide-lead"><code>AGENTS.md</code> —o <code>AGENTES.md</code> si lo nombramos en español— funciona como un módulo de system prompt. No describe una tarea puntual: describe la identidad operativa del agente dentro de un proyecto.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Rol:</strong> qué tipo de asistente es —docente, revisor, programador, orquestador, investigador.</div></li>
+            <li><span></span><div><strong>Criterios:</strong> cómo debe decidir, qué debe priorizar y cuándo debe pedir aclaración.</div></li>
+            <li><span></span><div><strong>Estilo:</strong> tono, idioma, nivel de detalle, forma de explicar y de corregir.</div></li>
+            <li><span></span><div><strong>Límites:</strong> qué no debe hacer, qué requiere permiso y qué debe verificar antes de afirmar.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="08">
+        <span class="slide-number">08 / 10</span>
+        <div class="eyebrow">Cómo</div>
+        <h2 class="slide-title"><code>SKILLS.md</code>: cómo se hace una <em>tarea</em></h2>
+        <p class="slide-lead">Una skill no es “un prompt guardado”. Es conocimiento operativo empaquetado: cuándo usarlo, qué pasos seguir, qué revisar y qué recursos aplicar. En muchos entornos aparece como varios archivos <code>SKILL.md</code>, uno por capacidad.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Disparadores:</strong> señales que indican cuándo cargar esa skill.</div></li>
+            <li><span></span><div><strong>Procedimiento:</strong> pasos, checklist, criterios de calidad y advertencias.</div></li>
+            <li><span></span><div><strong>Recursos:</strong> plantillas, ejemplos, convenciones o scripts auxiliares.</div></li>
+            <li><span></span><div><strong>Consistencia:</strong> distintos agentes pueden trabajar con el mismo método, no improvisar cada vez.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="09">
+        <span class="slide-number">09 / 10</span>
+        <div class="eyebrow">Con qué</div>
+        <h2 class="slide-title">Tools: con qué <em>herramientas</em> actúa</h2>
+        <p class="slide-lead">Las tools no son deseos del modelo: son funciones autorizadas por el entorno. Entran al contexto del agente como contratos de acción: qué puede llamar, con qué parámetros y qué resultado recibirá.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Leer y modificar archivos</strong>, buscar en el proyecto, ejecutar comandos o abrir un navegador.</div></li>
+            <li><span></span><div><strong>Consultar servicios</strong> mediante MCP: documentación, GitHub, Zotero, Figma, Playwright.</div></li>
+            <li><span></span><div><strong>Permisos:</strong> el host valida antes de ejecutar. El modelo solicita; la herramienta actúa.</div></li>
+            <li><span></span><div><strong>Salida estructurada:</strong> la tool devuelve datos, logs o diffs que el agente usa para decidir el siguiente paso.</div></li>
+        </ul>
+    </section>
+
+    <section class="slide" data-slide="10">
+        <span class="slide-number">10 / 10</span>
+        <div class="eyebrow">Taller</div>
+        <h2 class="slide-title">Un prompt simple para <em>empezar</em></h2>
+        <p class="slide-lead">La práctica ahora es pedir un código claro, documentado y fácil de leer: tokenizar un texto y construir una nube de palabras en Python.</p>
+        <div class="rule"></div>
+        <pre class="mono" style="margin: 0 0 var(--s-2); padding: var(--s-2) var(--s-3); border-left: 2px solid var(--accent); background: rgba(0,0,0,0.02); font-size: 0.78rem; line-height: 1.5; white-space: pre-wrap; color: var(--ink-700);">"Necesito un código en Python, bien documentado y fácil de entender, que tome un texto, lo tokenice y genere una nube de palabras. Quiero que expliques cada paso en comentarios o docstrings, que uses librerías comunes si hace falta, y que al final me indiques cómo ejecutarlo en mi computadora. Si hay más de una forma de hacerlo, elige la más simple y clara para alguien que recién empieza."</pre>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Entrada:</strong> un texto simple o un archivo de texto.</div></li>
+            <li><span></span><div><strong>Salida:</strong> una nube de palabras legible y un script comentado.</div></li>
+            <li><span></span><div><strong>Pedido extra:</strong> que explique dependencias y comando de ejecución.</div></li>
+            <li><span></span><div><strong>Objetivo pedagógico:</strong> entender el código, no solo copiarlo.</div></li>
+        </ul>
+    </section>
+
+    <nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 10</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 10.0%"></div></div></div>
+    </nav>
+
+    <script src="js/bg-code.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
