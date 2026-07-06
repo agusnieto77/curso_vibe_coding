@@ -1,96 +1,256 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 05: IA y análisis textual &middot; Fundaci&oacute;n CENTRA</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-<header class="masthead">
-        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
-        <div class="masthead-meta">Sesión 05 &middot; 06 jul</div>
-    </header>
-
-<section class="slide cover active" data-slide="01">
-        <div class="cover-overline">Fundación CENTRA &middot; 06 jul 2026 &middot; 16:30 a 18:30 h</div>
-        <h1 class="cover-title">IA y <em>análisis textual</em></h1>
-        <p class="cover-subtitle">Conteos, búsquedas, normalización, tokenización básica, detección de patrones y preparación de datos textuales.</p>
-        <div class="cover-footer">
-            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
-            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
-            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
-            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
-        </div>
-    </section>
-
-<section class="slide" data-slide="02">
-        <span class="slide-number">02 / 05</span>
-        <div class="eyebrow">ABC</div>
-        <h2 class="slide-title">Contar, buscar, <em>normalizar</em></h2>
-        <p class="slide-lead">Antes de cualquier técnica sofisticada, el análisis textual exige operaciones simples y bien controladas.</p>
-        <div class="rule"></div>
-        <ul class="editorial-list">
-            <li><span></span><div>Conteo de palabras o expresiones por documento.</div></li>
-<li><span></span><div>Búsqueda de términos, variantes y coocurrencias.</div></li>
-<li><span></span><div>Normalización de mayúsculas, acentos y puntuación.</div></li>
-<li><span></span><div>Exportación de resultados para revisar fuera del script.</div></li>
-        </ul>
-    </section>
-
-<section class="slide" data-slide="03">
-        <span class="slide-number">03 / 05</span>
-        <div class="eyebrow">Tokenización</div>
-        <h2 class="slide-title">Dividir el texto en <em>unidades</em></h2>
-        <p class="slide-lead">Tokenizar es convertir una secuencia textual en unidades analizables: palabras, frases, párrafos o documentos.</p>
-        <div class="rule"></div>
-        <ul class="editorial-list">
-            <li><span></span><div>La unidad de análisis depende de la pregunta.</div></li>
-<li><span></span><div>No todo corpus necesita el mismo tratamiento.</div></li>
-<li><span></span><div>Las stopwords pueden ser ruido o evidencia, según el caso.</div></li>
-<li><span></span><div>Las decisiones de limpieza son decisiones metodológicas.</div></li>
-        </ul>
-    </section>
-
-<section class="slide" data-slide="04">
-        <span class="slide-number">04 / 05</span>
-        <div class="eyebrow">Patrones</div>
-        <h2 class="slide-title">Detectar formas de <em>recurrencia</em></h2>
-        <p class="slide-lead">La IA puede generar scripts para buscar patrones, pero la interpretación sigue dependiendo del conocimiento del corpus.</p>
-        <div class="rule"></div>
-        <ul class="editorial-list">
-            <li><span></span><div>Patrones léxicos: palabras o expresiones repetidas.</div></li>
-<li><span></span><div>Patrones formales: fechas, nombres, lugares, hashtags.</div></li>
-<li><span></span><div>Patrones contextuales: palabras cercanas o combinaciones frecuentes.</div></li>
-<li><span></span><div>Verificación manual sobre muestras pequeñas.</div></li>
-        </ul>
-    </section>
-
-<section class="slide" data-slide="05">
-        <span class="slide-number">05 / 05</span>
-        <div class="eyebrow">Crítica</div>
-        <h2 class="slide-title">El resultado no se acepta <em>sin revisión</em></h2>
-        <p class="slide-lead">Todo análisis textual automático debe auditarse. La IA facilita el procesamiento, pero también puede introducir supuestos invisibles.</p>
-        <div class="rule"></div>
-        <ul class="editorial-list">
-            <li><span></span><div>Revisar muestras al azar.</div></li>
-<li><span></span><div>Comparar resultados antes y después de limpiar.</div></li>
-<li><span></span><div>Guardar el corpus original y el corpus transformado.</div></li>
-<li><span></span><div>Documentar cada decisión de normalización.</div></li>
-        </ul>
-    </section>
-
-<nav class="nav">
-        <div class="nav-controls">
-            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-        </div>
-        <div class="nav-progress"><span id="slide-counter">01 / 05</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 20.0%"></div></div></div>
-    </nav>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 05: IA y análisis textual &middot; Fundaci&oacute;n CENTRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <header class="masthead">
+        <div class="masthead-brand"><span class="masthead-brand-mark"></span>Vibe Coding &middot; Humanidades Digitales</div>
+        <div class="masthead-meta">Sesión 05 &middot; 06 jul</div>
+    </header>
+
+    <!-- Slide 01: Portada -->
+    <section class="slide cover active" data-slide="01">
+        <div class="cover-overline">Fundación CENTRA &middot; 06 jul 2026 &middot; 16:30 a 18:30 h</div>
+        <h1 class="cover-title">IA y <em>análisis textual</em></h1>
+        <p class="cover-subtitle">Conteos, búsquedas, normalización, tokenización básica, detección de patrones y preparación de datos textuales.</p>
+        <div class="cover-footer">
+            <div class="cover-meta-item"><span class="cover-meta-label">Curso</span><span class="cover-meta-value">Vibe Coding para Humanistas: programar con IA sin saber programar</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Docente</span><span class="cover-meta-value">Agustín Nieto</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Plataforma</span><span class="cover-meta-value">Moodle Centra</span></div>
+            <div class="cover-meta-item"><span class="cover-meta-label">Duración</span><span class="cover-meta-value">2 horas</span></div>
+        </div>
+    </section>
+
+    <!-- Slide 02: La idea -->
+    <section class="slide" data-slide="02">
+        <span class="slide-number">02 / 13</span>
+        <div class="eyebrow">La idea</div>
+        <h2 class="slide-title">Un agente no es solo un <em>modelo</em></h2>
+        <p class="slide-lead">Lo que de verdad determina si un agente sirve es todo lo que lo rodea: cómo recuerda, cómo se le explica qué hacer, qué rol cumple, con qué servicios se conecta y hasta dónde puede llegar solo.</p>
+        <div class="rule"></div>
+        <div class="two-col">
+            <div class="col-block">
+                <ul class="editorial-list">
+                    <li><span></span><div><strong>Memoria.</strong> Lo que recuerda en una conversación no es lo que guarda entre sesiones. Engram es la persistente: sobrevive al cierre.</div></li>
+                    <li><span></span><div><strong>Instrucciones.</strong> AGENTS.md le dice cómo se trabaja acá. No hace nada por sí solo, pero le cambia el comportamiento.</div></li>
+                    <li><span></span><div><strong>Roles.</strong> Agentes, skills y subagentes son cosas distintas. Llamarlos a todos «agente» trae confusión.</div></li>
+                    <li><span></span><div><strong>Conexiones.</strong> MCP enlaza al agente con servicios externos: GitHub, docs, bases de datos. Sin MCP, cada integración es código a medida.</div></li>
+                    <li><span></span><div><strong>Permisos.</strong> Un agente útil no es el que más puede hacer solo, sino el que sabe hasta dónde llegar.</div></li>
+                </ul>
+            </div>
+            <div class="col-block">
+                <pre style="font-family: var(--font-mono); font-size: 0.76rem; line-height: 1.6; background: var(--ink-50); border: 1px solid var(--ink-200); border-radius: 4px; padding: var(--s-3); color: var(--ink-700); margin: 0 0 var(--s-2) 0; white-space: pre; overflow-x: auto;">opencode/
+├── opencode.json      <span style="color: var(--accent);">⟵ permisos</span>
+├── AGENTS.md          <span style="color: var(--accent);">⟵ instrucciones</span>
+├── agents/            <span style="color: var(--accent);">⟵ roles</span>
+│   ├── build.md
+│   ├── plan.md
+│   └── orchestrator.md
+├── skills/            <span style="color: var(--accent);">⟵ roles</span>
+│   ├── sdd-apply/
+│   └── ...
+└── openspec/          <span style="color: var(--accent);">⟵ especificaciones</span>
+    ├── specs/
+    └── changes/</pre>
+                <div style="display: flex; align-items: center; gap: var(--s-2); flex-wrap: nowrap;">
+                    <div style="flex: 0 0 auto; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; background: var(--ink-100); border: 1px solid var(--ink-300); border-radius: 4px; padding: 6px 10px; color: var(--ink-700); white-space: nowrap;">opencode<span style="color: var(--ink-400);"> (agente)</span></div>
+                    <div style="flex: 0 0 auto; color: var(--accent); font-family: var(--font-mono); font-size: 1.1rem; line-height: 1;">⟶</div>
+                    <div style="flex: 1; font-family: var(--font-mono); font-size: 0.72rem; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 4px; padding: 6px 10px; color: var(--ink-800); min-width: 0;">
+                        <div style="font-weight: 600; color: var(--accent-strong); margin-bottom: 2px;">MCP <span style="color: var(--ink-500); font-weight: 400;">(servicios externos)</span></div>
+                        <div>engram <span style="color: var(--accent);">⟵ memoria</span> · github · context7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 03: Memoria — contexto vs persistencia -->
+    <section class="slide" data-slide="03">
+        <span class="slide-number">03 / 13</span>
+        <div class="eyebrow">Idea 1 &middot; Memoria</div>
+        <h2 class="slide-title">Lo que el agente <em>recuerda</em> y lo que el agente <em>guarda</em></h2>
+        <p class="slide-lead">Un agente tiene dos formas de memoria. Una es la que usa mientras trabaja: lo que le pediste, lo que leyó, lo que devolvió la última herramienta. La otra vive fuera del modelo y le permite acordarse de cosas entre sesiones. Confundirlas es el error más común.</p>
+        <div class="rule"></div>
+        <div class="two-col">
+            <div class="col-block">
+                <h3>Ventana de contexto</h3>
+                <p>Es la memoria del momento: lo que el agente tiene a la vista ahora. Se llena rápido y, cuando se satura, el rendimiento <strong>cae</strong>. Como la RAM de una computadora: sirve para el turno actual, no para acumular historia.</p>
+            </div>
+            <div class="col-block">
+                <h3>Memoria persistente</h3>
+                <p>Es lo que el agente guarda afuera y puede recuperar después, aunque cierre la sesión. El truco está en guardar <strong>señales útiles, no todo</strong>: si guardamos basura, recuperamos basura. Como un disco: hay que elegir qué vale la pena conservar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 04: Agente vs AGENTS.md -->
+    <section class="slide" data-slide="04">
+        <span class="slide-number">04 / 13</span>
+        <div class="eyebrow">Idea 2 &middot; Instrucciones</div>
+        <h2 class="slide-title">El agente <em>actúa</em>; AGENTS.md <em>orienta</em></h2>
+        <p class="slide-lead">Un agente es quien hace cosas: lee archivos, decide, ejecuta comandos, produce cambios. AGENTS.md es un archivo que le dice cómo se trabaja en ese repositorio. Uno ejecuta, el otro condiciona. Es una diferencia que parece menor, pero cambia todo.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>El agente.</strong> Es quien trabaja: lee, decide, ejecuta herramientas y produce cambios reales.</div></li>
+            <li><span></span><div><strong>AGENTS.md.</strong> Un archivo de instrucciones: normas, convenciones y comandos del repositorio. No «hace nada» por sí solo, pero le cambia la forma de trabajar al agente.</div></li>
+            <li><span></span><div><strong>La analogía.</strong> El README se escribe para humanos; el AGENTS.md se escribe para agentes. Dos públicos distintos, dos documentos distintos.</div></li>
+            <li><span></span><div><strong>Ya está en serio.</strong> Más de 60.000 proyectos open source lo usan. Codex y OpenCode lo leen antes de empezar a trabajar.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 05: Taxonomía de agentes -->
+    <section class="slide" data-slide="05">
+        <span class="slide-number">05 / 13</span>
+        <div class="eyebrow">Idea 3 &middot; Roles</div>
+        <h2 class="slide-title">No todo lo que llamamos <em>agente</em> es lo mismo</h2>
+        <p class="slide-lead">Cuando comparamos herramientas, solemos mezclar cosas de distinta naturaleza en la misma tabla. Separar los niveles ayuda a entender qué hace cada uno y a comparar con criterio, no por marca.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Plataforma.</strong> Codex, OpenCode: el entorno completo, con interfaz, modelos y herramientas. El «sistema operativo» del agente.</div></li>
+            <li><span></span><div><strong>Rol interno.</strong> Plan y Build en OpenCode: dos agentes primarios con permisos distintos. Uno diseña, el otro ejecuta.</div></li>
+            <li><span></span><div><strong>Subagente.</strong> El que se especializa: explorar, investigar o resolver una tarea acotada y volver con un resultado.</div></li>
+            <li><span></span><div><strong>Orquestador.</strong> OpenClaw y similares: la capa que coordina varios agentes, enruta tareas y gobierna el conjunto.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 06: Autonomía y control -->
+    <section class="slide" data-slide="06">
+        <span class="slide-number">06 / 13</span>
+        <div class="eyebrow">Idea 4 &middot; Autonomía</div>
+        <h2 class="slide-title">Autonomía <em>graduada</em>, no absoluta</h2>
+        <p class="slide-lead">No todos los modos de autonomía hacen lo mismo. Algunos persiguen un objetivo hasta cumplirlo, otros repiten una tarea en intervalos, otros simplemente abren los permisos. La autonomía útil no es «menos clics»: es verificaciones y límites bien puestos.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>/goal.</strong> El agente sigue trabajando hasta que un evaluador independiente considera que se cumplió la condición. No es libertad, es persistencia con meta.</div></li>
+            <li><span></span><div><strong>/loop.</strong> Vuelve a ejecutar un prompt en intervalos o con cadencia adaptativa. Útil para monitorear o iterar.</div></li>
+            <li><span></span><div><strong>Permisos.</strong> Hay perfiles escalados, desde acceso mínimo hasta <code>:danger-full-access</code>. El primero es el default; el último, una decisión consciente.</div></li>
+            <li><span></span><div><strong>«yolo».</strong> Jerga de comunidad, no un estándar. Significa «menos guardarraíles», pero no deja de ser shorthand: no es una primitiva del ecosistema.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 07: Arquitectura recomendada -->
+    <section class="slide" data-slide="07">
+        <span class="slide-number">07 / 13</span>
+        <div class="eyebrow">Para llevar</div>
+        <h2 class="slide-title">Cinco capas para un agente <em>que se pueda controlar</em></h2>
+        <p class="slide-lead">Si hubiera que resumir la idea en una receta, sería esta: contexto breve, memoria selectiva, instrucciones mínimas, roles separados y permisos graduados. Cada capa suma capacidad, pero también suma riesgo. El truco está en saber cuánto de cada una.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Contexto breve.</strong> Gestionar la ventana. Más contexto no es mejor memoria; a veces es sólo ruido.</div></li>
+            <li><span></span><div><strong>Memoria selectiva.</strong> Guardar señales útiles, no todo. Si guardamos basura, recuperamos basura.</div></li>
+            <li><span></span><div><strong>AGENTS.md mínimo.</strong> Un contrato corto y verificable. Lo inflado no ayuda: estorba.</div></li>
+            <li><span></span><div><strong>Plan antes que Build.</strong> En cambios complejos, primero diseñar y después ejecutar. No al revés.</div></li>
+            <li><span></span><div><strong>Permisos por tarea.</strong> Mínimo por defecto. Si hay que ampliar, que sea explícito y justificado.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 08: Riesgos y gobierno -->
+    <section class="slide" data-slide="08">
+        <span class="slide-number">08 / 13</span>
+        <div class="eyebrow">Lo que puede salir mal</div>
+        <h2 class="slide-title">Los agentes potentes <em>también se equivocan</em></h2>
+        <p class="slide-lead">Un AGENTS.md bien hecho reduce tiempo y tokens; uno inflado los empeora. La seguridad de un agente no se resuelve con «un modelo mejor». Hay que diseñar los límites desde el principio.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Context bloat.</strong> Demasiadas instrucciones introducen ruido. El agente lee más, pero entiende menos.</div></li>
+            <li><span></span><div><strong>Permisos amplios.</strong> Memoria + herramientas + acceso total es una combinación poderosa, pero también frágil. Más capacidad, más superficie de ataque.</div></li>
+            <li><span></span><div><strong>Recuperar basura.</strong> La memoria persistente que guarda todo, después recupera todo, incluidos los sesgos.</div></li>
+            <li><span></span><div><strong>Cómo cuidarse.</strong> Instrucciones mínimas, permisos estrechos, revisión independiente, logs y sandbox. Lo aburrido, pero lo que funciona.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 09: Conclusiones -->
+    <section class="slide" data-slide="09">
+        <span class="slide-number">09 / 13</span>
+        <div class="eyebrow">Para cerrar</div>
+        <h2 class="slide-title">El problema no es el modelo; es el <em>ensamblaje</em></h2>
+        <p class="slide-lead">Un agente no es mejor porque sea «más autónomo». Es mejor porque está mejor diseñado. La adopción seria pide sobriedad: menos ruido, más estructura.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div><strong>Separar memoria.</strong> Efímera y persistente no se mezclan. Cada una tiene su lugar.</div></li>
+            <li><span></span><div><strong>AGENTS.md corto.</strong> Escribir lo mínimo verificable, no un manual. Menos es más.</div></li>
+            <li><span></span><div><strong>Plan antes de Build.</strong> En cambios complejos, diseñar antes de ejecutar. Parece lento, pero es rápido.</div></li>
+            <li><span></span><div><strong>Permisos mínimos.</strong> Estrechos por defecto. Autonomía amplia, sólo en entornos controlados.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 10: Contar, buscar, normalizar -->
+    <section class="slide" data-slide="10">
+        <span class="slide-number">10 / 13</span>
+        <div class="eyebrow">ABC</div>
+        <h2 class="slide-title">Contar, buscar, <em>normalizar</em></h2>
+        <p class="slide-lead">Antes de cualquier técnica sofisticada, el análisis textual exige operaciones simples y bien controladas.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Conteo de palabras o expresiones por documento.</div></li>
+            <li><span></span><div>Búsqueda de términos, variantes y coocurrencias.</div></li>
+            <li><span></span><div>Normalización de mayúsculas, acentos y puntuación.</div></li>
+            <li><span></span><div>Exportación de resultados para revisar fuera del script.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 11: Tokenización -->
+    <section class="slide" data-slide="11">
+        <span class="slide-number">11 / 13</span>
+        <div class="eyebrow">Tokenización</div>
+        <h2 class="slide-title">Dividir el texto en <em>unidades</em></h2>
+        <p class="slide-lead">Tokenizar es convertir una secuencia textual en unidades analizables: palabras, frases, párrafos o documentos.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>La unidad de análisis depende de la pregunta.</div></li>
+            <li><span></span><div>No todo corpus necesita el mismo tratamiento.</div></li>
+            <li><span></span><div>Las stopwords pueden ser ruido o evidencia, según el caso.</div></li>
+            <li><span></span><div>Las decisiones de limpieza son decisiones metodológicas.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 12: Patrones -->
+    <section class="slide" data-slide="12">
+        <span class="slide-number">12 / 13</span>
+        <div class="eyebrow">Patrones</div>
+        <h2 class="slide-title">Detectar formas de <em>recurrencia</em></h2>
+        <p class="slide-lead">La IA puede generar scripts para buscar patrones, pero la interpretación sigue dependiendo del conocimiento del corpus.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Patrones léxicos: palabras o expresiones repetidas.</div></li>
+            <li><span></span><div>Patrones formales: fechas, nombres, lugares, hashtags.</div></li>
+            <li><span></span><div>Patrones contextuales: palabras cercanas o combinaciones frecuentes.</div></li>
+            <li><span></span><div>Verificación manual sobre muestras pequeñas.</div></li>
+        </ul>
+    </section>
+
+    <!-- Slide 13: Crítica -->
+    <section class="slide" data-slide="13">
+        <span class="slide-number">13 / 13</span>
+        <div class="eyebrow">Crítica</div>
+        <h2 class="slide-title">El resultado no se acepta <em>sin revisión</em></h2>
+        <p class="slide-lead">Todo análisis textual automático debe auditarse. La IA facilita el procesamiento, pero también puede introducir supuestos invisibles.</p>
+        <div class="rule"></div>
+        <ul class="editorial-list">
+            <li><span></span><div>Revisar muestras al azar.</div></li>
+            <li><span></span><div>Comparar resultados antes y después de limpiar.</div></li>
+            <li><span></span><div>Guardar el corpus original y el corpus transformado.</div></li>
+            <li><span></span><div>Documentar cada decisión de normalización.</div></li>
+        </ul>
+    </section>
+
+    <nav class="nav">
+        <div class="nav-controls">
+            <button id="prev-btn" class="nav-btn" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+            <button id="next-btn" class="nav-btn" aria-label="Siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+        <div class="nav-progress"><span id="slide-counter">01 / 13</span><div class="nav-progress-bar"><div id="progress-fill" class="nav-progress-fill" style="width: 7.69%"></div></div></div>
+    </nav>
+
     <script src="js/bg-code.js"></script>
-    <script src="js/app.js"></script>
-</body>
-</html>
+    <script src="js/app.js"></script>
+</body>
+</html>
